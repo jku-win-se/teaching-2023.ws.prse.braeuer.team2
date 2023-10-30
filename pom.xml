@@ -11,7 +11,7 @@
 	<name>test-build</name>
 
 	<modules>
-		<module>at.jku.se.prse.example.calculator</module>
+		<module>at.jku.se.prse.team2.logbook</module>
 	</modules>
 
 	<build>
@@ -23,7 +23,6 @@
 		        <configuration>
 		          <source>15</source>
 		          <target>15</target>
-		          <testFailureIgnore>true</testFailureIgnore>
 		        </configuration>
 		      </plugin>
 			    
