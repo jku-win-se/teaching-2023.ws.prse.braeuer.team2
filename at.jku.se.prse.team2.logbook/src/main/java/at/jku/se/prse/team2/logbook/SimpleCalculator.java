@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import at.jku.se.prse.team2.logbook.business.DatabaseConnection;
 import at.jku.se.prse.team2.logbook.factory.OperationFactory;
 
 public class SimpleCalculator extends JFrame {
@@ -48,8 +51,11 @@ public class SimpleCalculator extends JFrame {
 			@Override
 			public void run() {
 				try {
-					SimpleCalculator frame = new SimpleCalculator();
-					frame.setVisible(true);
+					DatabaseConnection databaseConnection = new DatabaseConnection();
+					Connection conn = databaseConnection.getConnection();
+					conn.close();
+					//SimpleCalculator frame = new SimpleCalculator();
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

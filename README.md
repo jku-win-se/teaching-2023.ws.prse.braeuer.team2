@@ -148,5 +148,6 @@ Lucidchart ist ein webbasiertes Tool zur Diagrammerstellung, mit der Benutzer vi
 
 
 
-
-  
+## Projektstruktur
+### Download JDBC Connector
+https://www.youtube.com/watch?v=whhSR0wlWQY
