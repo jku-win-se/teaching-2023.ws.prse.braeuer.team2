@@ -149,5 +149,10 @@ Lucidchart ist ein webbasiertes Tool zur Diagrammerstellung, mit der Benutzer vi
 
 
 ## Projektstruktur
+### MYSQL Installation
+#### Windows
+https://dev.mysql.com/doc/refman/8.2/en/windows-installation.html
+#### Mac
+https://dev.mysql.com/doc/refman/8.0/en/macos-installation.html
 ### Download JDBC Connector
 https://www.youtube.com/watch?v=whhSR0wlWQY
