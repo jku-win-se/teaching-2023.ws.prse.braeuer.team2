@@ -22,7 +22,7 @@ public class VehicleFacade {
 
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {

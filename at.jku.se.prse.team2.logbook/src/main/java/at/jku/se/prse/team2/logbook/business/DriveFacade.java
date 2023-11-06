@@ -1,5 +1,6 @@
 package at.jku.se.prse.team2.logbook.business;
 
+import at.jku.se.prse.team2.logbook.entities.Category;
 import at.jku.se.prse.team2.logbook.entities.Drive;
 import at.jku.se.prse.team2.logbook.entities.Status;
 import at.jku.se.prse.team2.logbook.entities.Vehicle;
@@ -19,8 +20,30 @@ public class DriveFacade {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         conn = databaseConnection.getConnection();
     }
-    public DriveFacade getDriveById(Integer id) throws SQLException {
-        throw new NotImplementedException("");
+    public Drive getDriveById(Integer id) throws SQLException {
+        Drive drive = null;
+        String query = "SELECT * FROM drive WHERE drive_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                drive = new Drive();
+                drive.setDriveId(resultSet.getInt("drive_id"));
+                drive.setVehicleId(resultSet.getInt("vehicle_id"));
+                drive.setDate(resultSet.getDate("drive_date"));
+                drive.setDepartureTime(resultSet.getTime("departure_time"));
+                drive.setArrivalTime(resultSet.getTime("arrival_time"));
+                drive.setWaitingTime(resultSet.getInt("waiting_time"));
+                drive.setDrivenKilometres(resultSet.getDouble("driven_kilometres"));
+                drive.setStatus(Status.valueOf(resultSet.getString("status")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return drive;
     }
 
     public List<Drive> getAllDrives() {

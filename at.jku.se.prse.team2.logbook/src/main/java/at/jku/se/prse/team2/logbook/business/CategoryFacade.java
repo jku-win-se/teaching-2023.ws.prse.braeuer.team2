@@ -1,6 +1,7 @@
 package at.jku.se.prse.team2.logbook.business;
 
 import at.jku.se.prse.team2.logbook.entities.Category;
+import at.jku.se.prse.team2.logbook.entities.Vehicle;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.sql.Connection;
@@ -18,8 +19,25 @@ public class CategoryFacade {
         conn = databaseConnection.getConnection();
     }
 
-    public CategoryFacade getCategoryById(Integer id) {
-        throw new NotImplementedException("");
+    public Category getCategoryById(Integer id) throws SQLException {
+        Category category = null;
+        String query = "SELECT * FROM category WHERE category_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                category = new Category();
+                category.setCategory_id(resultSet.getInt("category_id"));
+                category.setName(resultSet.getString("category_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return category;
     }
 
     public List<Category> getAllCategories() {
