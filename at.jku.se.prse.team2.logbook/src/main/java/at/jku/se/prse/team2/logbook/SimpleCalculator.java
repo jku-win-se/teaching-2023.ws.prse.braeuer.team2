@@ -52,8 +52,8 @@ public class SimpleCalculator extends JFrame {
 			public void run() {
 				try {
 					DatabaseConnection databaseConnection = new DatabaseConnection();
-					Connection conn = databaseConnection.getConnection();
-					conn.close();
+					databaseConnection.initiateDB();
+
 					//SimpleCalculator frame = new SimpleCalculator();
 					//frame.setVisible(true);
 				} catch (Exception e) {
