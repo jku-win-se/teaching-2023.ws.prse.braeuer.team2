@@ -20,7 +20,7 @@ public class DriveFacade {
         conn = databaseConnection.getConnection();
     }
     public DriveFacade getDriveById(Integer id) throws SQLException {
-        return null; //not implemented yet
+        throw new NotImplementedException("");
     }
 
     public List<Drive> getAllDrives() {

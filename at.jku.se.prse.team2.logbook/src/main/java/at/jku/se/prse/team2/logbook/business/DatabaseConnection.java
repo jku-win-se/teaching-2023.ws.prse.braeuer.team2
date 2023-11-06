@@ -1,5 +1,6 @@
 package at.jku.se.prse.team2.logbook.business;
 
+import at.jku.se.prse.team2.logbook.entities.Category;
 import at.jku.se.prse.team2.logbook.entities.Drive;
 import at.jku.se.prse.team2.logbook.entities.Vehicle;
 
@@ -33,6 +34,7 @@ public class DatabaseConnection {
         //sql statements for drop table
         String dropTableDrive = "DROP TABLE IF EXISTS drive";
         String dropTableVehicle = "DROP TABLE IF EXISTS vehicle";
+        String dropTableCategory = "DROP TABLE IF EXISTS category";
 
         // sql statements for create table
         String createVehicle = "CREATE TABLE vehicle (\n" +
@@ -53,14 +55,21 @@ public class DatabaseConnection {
                 "    FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)\n" +
                 ");";
 
+        String createCategory = "CREATE TABLE category (\n" +
+                "    category_id INT AUTO_INCREMENT PRIMARY KEY,\n" +
+                "    category_name VARCHAR(255) NOT NULL\n" +
+                ");";
+
         try {
             statement = conn.createStatement();
 
             statement.executeUpdate(dropTableDrive);
             statement.executeUpdate(dropTableVehicle);
+            statement.executeUpdate(dropTableCategory);
 
             statement.executeUpdate(createVehicle);
             statement.executeUpdate(createDrive);
+            statement.executeUpdate(createCategory);
 
             VehicleFacade vehicleFacade = new VehicleFacade();
             vehicleFacade.persistVehicle(new Vehicle("testlicense", 123456.0));
@@ -72,8 +81,12 @@ public class DatabaseConnection {
             driveFacade.persistDrive(new Drive(1, Date.valueOf(LocalDate.now())));
             driveFacade.persistDrive(new Drive(1, Date.valueOf(LocalDate.now()),Time.valueOf(LocalTime.now())));
 
+            CategoryFacade categoryFacade = new CategoryFacade();
+            categoryFacade.persistCategory(new Category("Reparatur"));
+
             System.out.println(vehicleFacade.getAllVehicles());
             System.out.println(driveFacade.getAllDrives());
+            System.out.println(categoryFacade.getAllCategories());
         } catch (SQLException e) {
             e.printStackTrace();
         }
