@@ -16,7 +16,7 @@ public class VehicleFacade {
         conn = databaseConnection.getConnection();
     }
 
-    public Vehicle getVehicleById(Long id) throws SQLException {
+    public Vehicle getVehicleById(Integer id) throws SQLException {
         Vehicle vehicle = null;
         String query = "SELECT * FROM vehicle WHERE vehicle_id = ?";
 
@@ -27,7 +27,7 @@ public class VehicleFacade {
 
             if (resultSet.next()) {
                 vehicle = new Vehicle();
-                vehicle.setVehicleId(resultSet.getLong("vehicle_id"));
+                vehicle.setVehicleId(resultSet.getInt("vehicle_id"));
                 vehicle.setLicensePlate(resultSet.getString("license_plate"));
                 vehicle.setOdometer(resultSet.getDouble("odometer"));
             }
@@ -48,7 +48,7 @@ public class VehicleFacade {
 
             while (resultSet.next()) {
                 Vehicle vehicle = new Vehicle();
-                vehicle.setVehicleId(resultSet.getLong("vehicle_id"));
+                vehicle.setVehicleId(resultSet.getInt("vehicle_id"));
                 vehicle.setLicensePlate(resultSet.getString("license_plate"));
                 vehicle.setOdometer(resultSet.getDouble("odometer"));
                 vehicles.add(vehicle);
@@ -74,12 +74,12 @@ public class VehicleFacade {
 
     }
 
-    public void deleteVehicleById(Long id) {
+    public void deleteVehicleById(Integer id) {
         String query = "DELETE FROM vehicle WHERE vehicle_id = ?";
 
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

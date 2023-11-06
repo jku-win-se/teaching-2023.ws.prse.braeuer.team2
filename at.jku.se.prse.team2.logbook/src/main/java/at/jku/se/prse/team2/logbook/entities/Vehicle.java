@@ -3,7 +3,7 @@ package at.jku.se.prse.team2.logbook.entities;
 import java.sql.Date;
 
 public class Vehicle {
-    private Long vehicleId;
+    private Integer vehicleId;
     private String licensePlate;
     private Double odometer;
 
@@ -32,6 +32,6 @@ public class Vehicle {
         this.odometer = odometer;
     }
 
-    public void setVehicleId(long vehicle_id) {
+    public void setVehicleId(Integer vehicle_id) {
     }
 }

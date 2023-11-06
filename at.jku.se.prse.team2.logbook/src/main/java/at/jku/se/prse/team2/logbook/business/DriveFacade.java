@@ -1,0 +1,89 @@
+package at.jku.se.prse.team2.logbook.business;
+
+import at.jku.se.prse.team2.logbook.entities.Drive;
+import at.jku.se.prse.team2.logbook.entities.Status;
+import at.jku.se.prse.team2.logbook.entities.Vehicle;
+import jdk.jshell.spi.ExecutionControl;
+import org.apache.commons.lang3.NotImplementedException;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DriveFacade {
+    private Connection conn;
+    public DriveFacade() {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        conn = databaseConnection.getConnection();
+    }
+    public DriveFacade getDriveById(Integer id) throws SQLException {
+        return null; //not implemented yet
+    }
+
+    public List<Drive> getAllDrives() {
+        List<Drive> drives = new ArrayList<>();
+        String query = "SELECT * FROM drive";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Drive drive = new Drive();
+                drive.setDriveId(resultSet.getInt("drive_id"));
+                drive.setVehicleId(resultSet.getInt("vehicle_id"));
+                drive.setDate(resultSet.getDate("drive_date"));
+                drive.setDepartureTime(resultSet.getTime("departure_time"));
+                drive.setArrivalTime(resultSet.getTime("arrival_time"));
+                drive.setWaitingTime(resultSet.getInt("waiting_time"));
+                drive.setDrivenKilometres(resultSet.getDouble("driven_kilometres"));
+                drive.setStatus(Status.valueOf(resultSet.getString("status")));
+                drives.add(drive);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return drives;
+    }
+
+    public void persistDrive(Drive v) {
+        //check if departure time is before arrival time
+        if(v.getDepartureTime() != null && v.getArrivalTime() != null && v.getDepartureTime().after(v.getArrivalTime()))
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        String query = "INSERT INTO drive (vehicle_id, drive_date, departure_time, arrival_time, waiting_time, driven_kilometres, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1,v.getVehicleId());
+            preparedStatement.setDate(2,v.getDate());
+            preparedStatement.setTime(3,v.getDepartureTime());
+            preparedStatement.setTime(4,v.getArrivalTime());
+            preparedStatement.setInt(5,v.getWaitingTime());
+            preparedStatement.setDouble(6,v.getDrivenKilometres());
+            preparedStatement.setString(7,v.getStatus().toString());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteDriveById(Integer id) {
+        String query = "DELETE FROM drive WHERE drive_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
