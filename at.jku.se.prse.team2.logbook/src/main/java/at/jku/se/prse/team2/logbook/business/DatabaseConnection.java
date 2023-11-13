@@ -93,8 +93,6 @@ public class DatabaseConnection {
             driveFacade.persistDrive(new Drive(2, Date.valueOf(LocalDate.now())));
             driveFacade.persistDrive(new Drive(2, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now())));
 
-            driveFacade.persistRecurringDrive(1, Date.valueOf("2023-11-15"),Date.valueOf("2023-12-15"),1);
-
             CategoryFacade categoryFacade = new CategoryFacade();
             categoryFacade.persistCategory(new Category("Reparatur"));
             categoryFacade.persistCategory(new Category("Freizeit"));

@@ -101,7 +101,7 @@ public class DriveFacade {
         }
     }
 
-    public void persistRecurringDrive(Integer vehicleId, Date startDate, Date endDate, int weeklyInterval) {
+    /*public void persistRecurringDrive(Integer vehicleId, Date startDate, Date endDate, int weeklyInterval) {
         String query = "INSERT INTO drive (vehicle_id, drive_date, status) VALUES (?, ?, ?)";
 
         try {
@@ -121,7 +121,7 @@ public class DriveFacade {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void deleteDriveById(Integer id) {
         String query = "DELETE FROM drive WHERE drive_id = ?";
