@@ -6,12 +6,15 @@ import at.jku.se.prse.team2.logbook.entities.Status;
 import at.jku.se.prse.team2.logbook.entities.Vehicle;
 import jdk.jshell.spi.ExecutionControl;
 import org.apache.commons.lang3.NotImplementedException;
+import java.time.DayOfWeek;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public class DriveFacade {
@@ -93,6 +96,28 @@ public class DriveFacade {
             preparedStatement.setDouble(6,v.getDrivenKilometres());
             preparedStatement.setString(7,v.getStatus().toString());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void persistRecurringDrive(Integer vehicleId, Date startDate, Date endDate, int weeklyInterval) {
+        String query = "INSERT INTO drive (vehicle_id, drive_date, status) VALUES (?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+            Date currentDate = startDate;
+            while (!currentDate.after(endDate)) {
+                preparedStatement.setInt(1, vehicleId);
+                preparedStatement.setDate(2, currentDate);
+                preparedStatement.setString(3, Status.ZUKUENFTIG.toString());
+                preparedStatement.addBatch();
+
+                long millis = currentDate.getTime() + (weeklyInterval * 7 * 24 * 60 * 60 * 1000);
+            }
+
+            preparedStatement.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
