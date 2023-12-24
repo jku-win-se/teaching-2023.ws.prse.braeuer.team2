@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -155,6 +156,11 @@ public class DriveFacade {
         }
     }
 
+//    public static void main(String args[]) {
+//    	DriveFacade db = new DriveFacade();
+//    	db.deleteDriveById(43);
+//    }
+
     public Integer getLastDriveId() {
         Integer lastDriveId = null;
         String query = "SELECT drive_id FROM drive ORDER BY drive_id DESC LIMIT 1";
@@ -182,7 +188,7 @@ public class DriveFacade {
      *
      * */
 
-    public String getLicense_plateByDriveId(int dID) {
+    public String getLicensePlateByDriveId(int dID) {
         String query = "SELECT * FROM `vehicle` WHERE vehicle_id=?";
         String str="";
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
@@ -191,7 +197,7 @@ public class DriveFacade {
                 while (resultSet.next()) {
 
                     str = resultSet.getString("license_plate");
-                    System.out.println("license plate"+str);
+                    //System.out.println("license plate"+str);
                 }
             }
         } catch (SQLException e) {
@@ -221,7 +227,6 @@ public class DriveFacade {
 
         return categoryName;
     }
-
 
     @SuppressWarnings("exports")
     public List<Drive> filterDrivesWithQuery(String query, String category) {
@@ -273,7 +278,6 @@ public class DriveFacade {
         return categoryNames;
     }
 
-
     @SuppressWarnings({ "unused", "exports" })
     public List<Drive> filterByStatus(String status) {
         List<Drive> filteredDrives = new ArrayList<>();
@@ -313,12 +317,63 @@ public class DriveFacade {
         return filteredDrives;
     }
 
-
-
     class InvalidDriveException extends Exception {
+        private static final long serialVersionUID = 1L;
+
         public InvalidDriveException(String message) {
             super(message);
         }
     }
+
+
+    /*
+     *
+     * second term edition & add some method
+     *
+     */
+
+
+    public double getAverageSpeedByDriveId(int driveId) throws SQLException {
+        double averageSpeed = 0.0;
+        String query = "SELECT driven_kilometres, departure_time, arrival_time, waiting_time FROM drive WHERE drive_id = ?";
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.setInt(1, driveId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                double drivenKilometres = resultSet.getDouble("driven_kilometres");
+                Time departureTime = resultSet.getTime("departure_time");
+                Time arrivalTime = resultSet.getTime("arrival_time");
+                int waitingTime = resultSet.getInt("waiting_time");
+
+                long timeDiffSeconds = calculateTimeDifferenceInSeconds(departureTime, arrivalTime, waitingTime);
+
+                if (timeDiffSeconds != 0) {
+                    averageSpeed = Math.abs(drivenKilometres / (timeDiffSeconds / 3600.0));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return averageSpeed;
+    }
+
+    private long calculateTimeDifferenceInSeconds(Time departureTime, Time arrivalTime, int waitingTime) {
+        long departureMillis = departureTime.getTime();
+        long arrivalMillis = arrivalTime.getTime();
+        long timeDiffMillis = arrivalMillis - departureMillis;
+
+        timeDiffMillis += waitingTime * 1000;
+        long timeDiffSeconds = timeDiffMillis / 1000;
+
+        return timeDiffSeconds;
+    }
+
+
+
+
+
+
 
 }

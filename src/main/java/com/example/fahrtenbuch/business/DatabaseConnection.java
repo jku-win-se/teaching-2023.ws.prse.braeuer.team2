@@ -33,9 +33,9 @@ public class DatabaseConnection {
         Connection con = db.getConnection();
 
         if(con!=null) {
-          //  System.out.println("Successfull");
+            //  System.out.println("Successfull");
         }else {
-           // System.out.println("connection failed");
+            // System.out.println("connection failed");
         }
 
     }

@@ -40,7 +40,7 @@ public class Drive {
         this.vonDate = vonDate;
         this.bisDate = bisDate;
     }
-    
+
     // nach der Fahrt
     public Drive(Integer vehicleId, Date date, Time departureTime, Time arrivalTime, Integer waitingTime, Double drivenKilometres) {
         this.vehicleId = vehicleId;
