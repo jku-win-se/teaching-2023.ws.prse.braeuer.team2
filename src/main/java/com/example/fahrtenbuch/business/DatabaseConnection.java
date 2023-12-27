@@ -1,22 +1,24 @@
 package com.example.fahrtenbuch.business;
 
+import com.example.fahrtenbuch.entities.Category;
+import com.example.fahrtenbuch.entities.CategoryDrive;
+import com.example.fahrtenbuch.entities.Drive;
+import com.example.fahrtenbuch.entities.Vehicle;
 
 import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import com.example.fahrtenbuch.entities.*;
-
 
 public class DatabaseConnection {
     public Connection conn;
     Statement statement = null;
 
     public Connection getConnection() {
-        String jdbcURL = "jdbc:mysql://localhost:3306/logbook";
-        String user = "root";
-        String pass = "12345678";
+        String jdbcURL = "jdbc:mysql://logbook-do-user-15383945-0.c.db.ondigitalocean.com:25060/logbook";
+        String user = "logbook";
+        String pass = "AVNS_3f_CWsrS8a_9lHfghe1";
 
         try {
             conn = DriverManager.getConnection(jdbcURL, user, pass);
@@ -26,18 +28,6 @@ public class DatabaseConnection {
         }
 
         return conn;
-    }
-
-    public static void main(String [] args) {
-        DatabaseConnection db = new DatabaseConnection();
-        Connection con = db.getConnection();
-
-        if(con!=null) {
-          //  System.out.println("Successfull");
-        }else {
-           // System.out.println("connection failed");
-        }
-
     }
 
     public void initiateDB() throws SQLException {
@@ -66,7 +56,7 @@ public class DatabaseConnection {
                 "    waiting_time INT,\n" + //in minutes
                 "    driven_kilometres DOUBLE,\n" +
                 "    status VARCHAR(255),\n" +
-                "    FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)\n" +
+                "    FOREIGN KEY (vehicle_id) REFERENCES vehicle(vehicle_id)\n" +
                 ");";
 
         String createCategory = "CREATE TABLE category (\n" +
@@ -78,8 +68,8 @@ public class DatabaseConnection {
                 "    category_id INT,\n" +
                 "    drive_id INT,\n" +
                 "    PRIMARY KEY (category_id, drive_id),\n" +
-                "    FOREIGN KEY (category_id) REFERENCES Category(category_id),\n" +
-                "    FOREIGN KEY (drive_id) REFERENCES Drive(drive_id)\n" +
+                "    FOREIGN KEY (category_id) REFERENCES category(category_id),\n" +
+                "    FOREIGN KEY (drive_id) REFERENCES drive(drive_id)\n" +
                 ");";
 
         try {

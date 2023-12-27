@@ -112,6 +112,10 @@ public class FahrtenbucherController implements Initializable{
 
             int vid = cellData.getValue().getVehicleId();
             String lp = driveFacade.getLicensePlateByDriveId(vid);
+
+
+            
+
             return new SimpleStringProperty(""+lp);
         });
 
@@ -135,7 +139,7 @@ public class FahrtenbucherController implements Initializable{
         });
 
         tableLogbook.setItems(fahrtListe);
-
+ 
         tableLogbook.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 Drive selectedDrive = tableLogbook.getSelectionModel().getSelectedItem();
@@ -243,6 +247,7 @@ public class FahrtenbucherController implements Initializable{
         Integer month = parseTextFieldToInt(monat.getText());
         Integer year = parseTextFieldToInt(jahrTF.getText());
         Integer waitingTime = parseTextFieldToInt(fahrtzeitTF.getText());
+
         Integer day = parseTextFieldToInt(tagTF.getText());
 
 
@@ -270,11 +275,13 @@ public class FahrtenbucherController implements Initializable{
 
         if (waitingTime != null) {
             queryBuilder.append(" AND waiting_time = ").append(waitingTime);
+
         }
 
         //new addition
         if (day != null) {
             queryBuilder.append(" AND DAY(drive_date) = ").append(day);
+
         }
 
         List<Drive> driveList = driveFacade.filterDrivesWithQuery(queryBuilder.toString(), category);
