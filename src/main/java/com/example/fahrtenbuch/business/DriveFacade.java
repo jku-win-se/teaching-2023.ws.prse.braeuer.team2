@@ -336,6 +336,7 @@ public class DriveFacade {
 
     public double getAverageSpeedByDriveId(int driveId) throws SQLException {
         double averageSpeed = 0.0;
+        long timeDiffSeconds = 0;
         String query = "SELECT driven_kilometres, departure_time, arrival_time, waiting_time FROM drive WHERE drive_id = ?";
 
         try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
@@ -348,7 +349,8 @@ public class DriveFacade {
                 Time arrivalTime = resultSet.getTime("arrival_time");
                 int waitingTime = resultSet.getInt("waiting_time");
 
-                long timeDiffSeconds = calculateTimeDifferenceInSeconds(departureTime, arrivalTime, waitingTime);
+                if(departureTime != null && arrivalTime != null)
+                    timeDiffSeconds = calculateTimeDifferenceInSeconds(departureTime, arrivalTime, waitingTime);
 
                 if (timeDiffSeconds != 0) {
                     averageSpeed = Math.abs(drivenKilometres / (timeDiffSeconds / 3600.0));
