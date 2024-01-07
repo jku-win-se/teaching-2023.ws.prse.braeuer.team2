@@ -11,7 +11,7 @@ public class Vehicle {
     }
 
     public Vehicle() {
-        
+
     }
 
     public Integer getVehicleId() {

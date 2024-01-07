@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -40,6 +41,11 @@ public class FahrtenbucherController implements Initializable{
     private TableColumn<Drive, String> abfahrtColumn;
     @FXML
     private TableColumn<Drive, String> ankunftColumn;
+    @FXML
+    private TableColumn<Drive, String> avgSpeedColumn;
+    @FXML
+    private TableColumn<Drive, String> dateColumn;
+
 
     @SuppressWarnings("exports")
     public Button btnStart;
@@ -100,15 +106,12 @@ public class FahrtenbucherController implements Initializable{
 
 
     //new method for fetching data
-    @SuppressWarnings("exports")
     public void setTableLogbook(ObservableList<Drive> fahrtListe) {
 
         kfzColumn.setCellValueFactory(cellData -> {
 
             int vid = cellData.getValue().getVehicleId();
             String lp = driveFacade.getLicensePlateByDriveId(vid);
-
-            //return new SimpleStringProperty(cellData.getValue().getVehicleId().toString());
             return new SimpleStringProperty(""+lp);
         });
 
@@ -125,7 +128,7 @@ public class FahrtenbucherController implements Initializable{
         gefahreneKmColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDrivenKilometres().toString()));
         aktiveFahrtColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getWaitingTime().toString()));
 
-        // Check if category is null before calling toString()
+        //check if category is empty before calling toString...
         kategorieColumn.setCellValueFactory(cellData -> {
             String category = driveFacade.getCategoryNameByDriveId(cellData.getValue().getDriveId());
             return new SimpleStringProperty(category != null ? category.toString() : "...");
@@ -145,33 +148,29 @@ public class FahrtenbucherController implements Initializable{
                 }
             }
         });
+
+        dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDate().toString()));
+
+
+        avgSpeedColumn.setCellValueFactory(cellData -> {
+            double avgSpeed;
+            String formattedAvgSpeed = "";
+
+            try {
+                avgSpeed = driveFacade.getAverageSpeedByDriveId(cellData.getValue().getDriveId());
+                formattedAvgSpeed = String.format("%.2f", avgSpeed);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return new SimpleStringProperty(formattedAvgSpeed != null ? formattedAvgSpeed : "...");
+        });
+
+
+
+
     }
 
-
-//    public void setTableLogbook(ObservableList<Drive> fahrtListe) {
-//        kfzColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVehicleId().toString()));
-//        abfahrtColumn.setCellValueFactory(cellData -> new SimpleStringProperty("abfahrt")); //cellData.getValue().getDepartureTime().toString())
-//        ankunftColumn.setCellValueFactory(cellData -> new SimpleStringProperty("ankunft")); //cellData.getValue().getArrivalTime().toString())
-//        gefahreneKmColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDrivenKilometres().toString()));
-//        aktiveFahrtColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getWaitingTime().toString()));
-//        kategorieColumn.setCellValueFactory(cellData -> new SimpleStringProperty("test"));
-//
-//        tableLogbook.setItems(fahrtListe);
-//
-//        tableLogbook.setOnMouseClicked(event -> {
-//            if (event.getClickCount() == 1) {
-//                Drive selectedDrive = tableLogbook.getSelectionModel().getSelectedItem();
-//                if (selectedDrive != null) {
-//                    try {
-//                        handleSelectedDrive(event, selectedDrive);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//
-//    }
 
     @FXML
     private void returnToStartBtn(ActionEvent event) throws IOException {
@@ -244,6 +243,7 @@ public class FahrtenbucherController implements Initializable{
         Integer month = parseTextFieldToInt(monat.getText());
         Integer year = parseTextFieldToInt(jahrTF.getText());
         Integer waitingTime = parseTextFieldToInt(fahrtzeitTF.getText());
+        Integer day = parseTextFieldToInt(tagTF.getText());
 
 
         if (year != null) {
@@ -270,6 +270,11 @@ public class FahrtenbucherController implements Initializable{
 
         if (waitingTime != null) {
             queryBuilder.append(" AND waiting_time = ").append(waitingTime);
+        }
+
+        //new addition
+        if (day != null) {
+            queryBuilder.append(" AND DAY(drive_date) = ").append(day);
         }
 
         List<Drive> driveList = driveFacade.filterDrivesWithQuery(queryBuilder.toString(), category);
@@ -335,6 +340,8 @@ public class FahrtenbucherController implements Initializable{
         List<String> cataName = driveFacade.getAllCategoryNames();
         ObservableList<String> categories = FXCollections.observableArrayList(cataName);
         kategoryTF.setItems(categories);
+
+
 
     }
 

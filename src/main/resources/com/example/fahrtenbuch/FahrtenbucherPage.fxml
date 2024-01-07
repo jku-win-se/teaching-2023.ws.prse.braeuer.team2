@@ -16,6 +16,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+
+
 <AnchorPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fahrtenbuch.FahrtenbucherController">
     <AnchorPane layoutX="-197.0" layoutY="-109.0" prefHeight="700.0" prefWidth="900.0">
         <Pane layoutX="175.0" layoutY="108.0" prefHeight="597.0" prefWidth="218.0" style="-fx-background-color: #333E50;">
@@ -68,11 +70,13 @@
         <TableView fx:id="tableLogbook" layoutX="402.0" layoutY="461.0" prefHeight="226.0" prefWidth="759.0">
             <columns>
                 <TableColumn fx:id="kfzColumn" prefWidth="122.0" text="KFZ-Kennzeichen" />
-                <TableColumn fx:id="abfahrtColumn" prefWidth="122.0" text="Anfang" />
-                <TableColumn fx:id="ankunftColumn" prefWidth="108.0" text="Ende" />
-                <TableColumn fx:id="gefahreneKmColumn" prefWidth="124.0" text="gefahrene km" />
-                <TableColumn fx:id="aktiveFahrtColumn" prefWidth="139.0" text="Stehzeit" />
-                <TableColumn fx:id="kategorieColumn" prefWidth="137.0" text="Kategorie" />
+                <TableColumn fx:id="abfahrtColumn" prefWidth="77.0" text="Anfang" />
+                <TableColumn fx:id="ankunftColumn" prefWidth="77.0" text="Ende" />
+                <TableColumn fx:id="gefahreneKmColumn" prefWidth="88.0" text="gefahrene km" />
+                <TableColumn fx:id="aktiveFahrtColumn" prefWidth="69.0" text="Stehzeit" />
+                <TableColumn fx:id="kategorieColumn" prefWidth="99.0" text="Kategorie" />
+                <TableColumn fx:id="dateColumn" prefWidth="126.0" text="Datum" />
+                <TableColumn fx:id="avgSpeedColumn" prefWidth="100.0" text="D.Geschwindigkeit" />
             </columns>
         </TableView>
         <Pane layoutX="402.0" layoutY="165.0" prefHeight="217.0" prefWidth="759.0" style="-fx-border-color: #CDCDCD;">

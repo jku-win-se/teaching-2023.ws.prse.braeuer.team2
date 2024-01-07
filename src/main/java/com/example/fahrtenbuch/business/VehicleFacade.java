@@ -26,6 +26,7 @@ public class VehicleFacade {
         Vehicle vehicle = null;
         String query = "SELECT * FROM vehicle WHERE vehicle_id = ?";
 
+
         try {
             PreparedStatement preparedStatement = this.conn.prepareStatement(query);
             preparedStatement.setInt(1, id);
