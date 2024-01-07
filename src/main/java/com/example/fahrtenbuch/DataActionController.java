@@ -37,6 +37,7 @@ public class DataActionController {
     private Alert alert;
     List<Drive> drives = new ArrayList();
 
+
     public DataActionController() {
         this.databaseConnection.getConnection();
         this.alert = new Alert(AlertType.INFORMATION);

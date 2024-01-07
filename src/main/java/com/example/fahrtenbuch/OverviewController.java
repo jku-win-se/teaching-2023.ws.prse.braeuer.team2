@@ -269,6 +269,7 @@ public class OverviewController implements Initializable{
         };
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<String> categoryNames = driveFacade.getAllCategoryNames();
@@ -279,6 +280,7 @@ public class OverviewController implements Initializable{
 
         updateCheart(Year.now().getValue());
     }
+
 
 
 }

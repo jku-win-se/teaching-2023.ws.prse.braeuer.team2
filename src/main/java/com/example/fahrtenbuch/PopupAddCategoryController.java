@@ -47,6 +47,7 @@ public class PopupAddCategoryController {
 
     }
 
+
     private void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

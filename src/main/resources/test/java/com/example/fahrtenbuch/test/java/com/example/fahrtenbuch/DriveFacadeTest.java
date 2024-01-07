@@ -170,6 +170,7 @@ public class DriveFacadeTest {
 		int knownDriveId = 1;
 		double expectedAverageSpeed = 49.0;
 
+
 		try {
 			double actualAverageSpeed = driveFacade.getAverageSpeedByDriveId(knownDriveId);
 			assertEquals(expectedAverageSpeed, actualAverageSpeed, 1.0);

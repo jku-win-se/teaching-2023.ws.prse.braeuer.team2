@@ -24,6 +24,7 @@ public class PopupAddKfzController {
         this.vehicleFacade = new VehicleFacade();
     }
 
+
     @FXML
     public void addNewKfz(ActionEvent actionEvent) {
         String licensePlate = newKfzTextField.getText();
