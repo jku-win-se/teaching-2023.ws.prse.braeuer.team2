@@ -18,7 +18,7 @@ public class LogbookApplication extends Application {
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
-        FXMLLoader fxmlLoader = new FXMLLoader(LogbookApplication.class.getResource("/com/example/fahrtenbuch/hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(LogbookApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 915, 584);
         stage.setTitle("Fahrtenbuch");
         stage.setScene(scene);
