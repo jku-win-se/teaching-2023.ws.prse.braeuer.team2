@@ -16,92 +16,90 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="584.0" prefWidth="915.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fahrtenbuch.OverviewController">
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<AnchorPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fahrtenbuch.PageController">
     <children>
-        <SplitPane layoutX="193.0" prefHeight="60.0" prefWidth="772.0" style="-fx-background-color: #343E51;">
-            <items>
-                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" ÜBERSICHT" wrappingWidth="187.14453125">
-                    <font>
-                        <Font name="Arial" size="26.0" />
-                    </font>
-                </Text>
-            </items>
-        </SplitPane>
-        <SplitPane dividerPositions="0.17616580310880828" layoutX="224.0" layoutY="91.0" orientation="VERTICAL" prefHeight="195.0" prefWidth="704.0">
-            <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="561.0" style="-fx-background-color: D5D8DE;">
+        <AnchorPane layoutX="-168.0" layoutY="-109.0" prefHeight="706.0" prefWidth="1140.0">
+            <children>
+                <Pane layoutX="149.0" layoutY="109.0" prefHeight="597.0" prefWidth="225.0" style="-fx-background-color: #333E50;">
                     <children>
-                        <Text fill="#343e51" layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fahrten filtern">
+                        <ImageView fx:id="logoIcon" fitHeight="115.0" fitWidth="131.0" layoutX="47.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <Separator layoutX="3.0" layoutY="185.0" opacity="0.5" prefHeight="3.0" prefWidth="1024.0" style="-fx-background-color: #333E50;" />
+                        <HBox layoutX="34.0" layoutY="209.0" prefHeight="30.0" prefWidth="177.0">
+                            <children>
+                                <Button fx:id="btnStart" mnemonicParsing="false" onAction="#returnToStartBtn" prefHeight="35.0" prefWidth="66.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Start" textFill="WHITE">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <HBox layoutX="34.0" layoutY="252.0" prefHeight="30.0" prefWidth="177.0">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#newFahrtAction" prefHeight="33.0" prefWidth="116.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Neue Fahrt" textFill="WHITE">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <HBox layoutX="34.0" layoutY="295.0" prefHeight="30.0" prefWidth="177.0">
+                            <children>
+                                <Button fx:id="btnLogBook" mnemonicParsing="false" onAction="#fahrtenbucherAction" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Fahrtenbucher" textFill="WHITE">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <HBox layoutX="34.0" layoutY="342.0" prefHeight="30.0" prefWidth="177.0">
+                            <children>
+                                <Button fx:id="btnDataAction" mnemonicParsing="false" onAction="#handleBtnDataAction" prefHeight="33.0" prefWidth="139.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Import/Export" textFill="WHITE">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <Button fx:id="btnOverview" layoutX="-14.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleBtnOverview" prefHeight="35.0" prefWidth="204.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Übersicht" textFill="WHITE">
                             <font>
-                                <Font name="Arial" size="14.0" />
+                                <Font size="18.0" />
                             </font>
-                        </Text>
+                        </Button>
+                        <ImageView fitHeight="142.0" fitWidth="154.0" layoutX="52.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/Logo.png" />
+                            </image>
+                        </ImageView>
                     </children>
-                </AnchorPane>
-                <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="634.0">
-                    <TextField fx:id="tagTextField" layoutX="11.0" layoutY="6.0" prefHeight="41.0" prefWidth="218.0" promptText="Tag" />
-                    <TextField fx:id="monatTextField" layoutX="11.0" layoutY="53.0" prefHeight="41.0" prefWidth="218.0" promptText="Monat" />
-                    <TextField fx:id="jahrTextField" layoutX="11.0" layoutY="101.0" prefHeight="41.0" prefWidth="218.0" promptText="Jahr" />
-                    <TextField fx:id="gefahreneKmTextField" layoutX="244.0" layoutY="53.0" prefHeight="41.0" prefWidth="218.0" promptText="gefahrene km" />
-                    <TextField fx:id="durchschnittlicheGeschTextField" layoutX="244.0" layoutY="101.0" prefHeight="41.0" prefWidth="218.0" promptText="durchscnittliche Geschwindigkeit" />
-                    <TextField fx:id="fahrtzeitTextField" layoutX="244.0" layoutY="6.0" prefHeight="41.0" prefWidth="218.0" promptText="Stehzeit" />
-                    <ComboBox fx:id="kategoryTF" layoutX="477.0" layoutY="6.0" prefHeight="41.0" prefWidth="218.0" promptText="Kategorie (optional)" style="-fx-background-color: white; -fx-padding: 0px 20px; -fx-border-color: rgb(128,128,128);  -fx-border-width: 0.5; -fx-border-radius: 5; ">
-
-                    </ComboBox>
-                    <Button layoutX="616.0" layoutY="122.0" mnemonicParsing="false" onAction="#filterBtnAct" prefHeight="23.0" prefWidth="66.0" text="Filter" />
-                </AnchorPane>
-            </items>
-        </SplitPane>
-        <Pane layoutX="-25.0" prefHeight="597.0" prefWidth="218.0" style="-fx-background-color: #333E50;">
-            <ImageView fx:id="logoIcon" fitHeight="115.0" fitWidth="131.0" layoutX="47.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
-            <Separator layoutX="3.0" layoutY="185.0" opacity="0.5" prefHeight="2.0" prefWidth="218.0" style="-fx-background-color: #333E50;" />
-            <HBox layoutX="47.0" layoutY="210.0" prefHeight="30.0" prefWidth="177.0">
-                <Button fx:id="btnStart" mnemonicParsing="false" onAction="#returnToStartBtn" prefHeight="35.0" prefWidth="66.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Start" textFill="WHITE">
+                </Pane>
+                <Pane layoutX="372.0" layoutY="108.0" prefHeight="49.0" prefWidth="801.0" style="-fx-background-color: #333E50;">
+                    <children>
+                        <Label layoutX="15.0" layoutY="8.0" prefHeight="33.0" prefWidth="423.0" style="-fx-font-family: Arial; -fx-font-weight: 700;" text="WIEDERHOLENDE FAHRT" textFill="WHITE">
+                            <font>
+                                <Font size="26.0" />
+                            </font>
+                        </Label>
+                    </children></Pane>
+                <TextField fx:id="kfzTF" layoutX="407.0" layoutY="201.0" prefHeight="60.0" prefWidth="296.0" promptText="KFZ-Kennzeichen" style="-fx-padding: 0px 20px;" />
+                <TextField fx:id="vonDatumTF" layoutX="407.0" layoutY="328.0" prefHeight="49.0" prefWidth="296.0" promptText="Von-Datum" style="-fx-padding: 0px 20px;" />
+                <TextField fx:id="bisDatumTF" layoutX="407.0" layoutY="407.0" prefHeight="49.0" prefWidth="296.0" promptText="Bis-Datum" style="-fx-padding: 0px 20px;" />
+                <Button fx:id="btnCreateDrive" layoutX="406.0" layoutY="579.0" mnemonicParsing="false" onAction="#addDrive" prefHeight="49.0" prefWidth="296.0" style="-fx-background-color: #333E50; -fx-border-radius: 10px; -fx-cursor: pointer;" text="FAHRT ANLEGEN" textFill="WHITE">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                     </font>
                 </Button>
-            </HBox>
-            <HBox layoutX="47.0" layoutY="253.0" prefHeight="30.0" prefWidth="177.0">
-                <Button fx:id="btnNewRide" mnemonicParsing="false" onAction="#handleNewRide" prefHeight="33.0" prefWidth="118.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Neue Fahrt" textFill="WHITE">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Button>
-            </HBox>
-            <HBox layoutX="34.0" layoutY="295.0" prefHeight="30.0" prefWidth="177.0">
-                <Button fx:id="btnLogBook" mnemonicParsing="false" onAction="#handleFahrtenbucherPage" prefHeight="35.0" prefWidth="163.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Fahrtenbucher" textFill="WHITE">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Button>
-            </HBox>
-            <HBox layoutX="34.0" layoutY="342.0" prefHeight="30.0" prefWidth="177.0">
-                <Button fx:id="btnDataAction" mnemonicParsing="false" onAction="#handleBtnDataAction" prefHeight="35.0" prefWidth="161.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Import/Export" textFill="WHITE">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Button>
-            </HBox>
-            <Button layoutX="-14.0" layoutY="390.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="225.0" style="-fx-background-color: #333E50; -fx-font-family: Arial; -fx-cursor: pointer;" text="Übersicht" textFill="WHITE">
-                <font>
-                    <Font size="18.0" />
-                </font>
-            </Button>
-            <ImageView fitHeight="142.0" fitWidth="154.0" layoutX="58.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@images/Logo.png" />
-                </image>
-            </ImageView>
-        </Pane>
-        <LineChart fx:id="lineChart" layoutX="224.0" layoutY="299.0" prefHeight="296.0" prefWidth="702.0">
-            <xAxis>
-                <CategoryAxis side="BOTTOM" />
-            </xAxis>
-            <yAxis>
-                <NumberAxis side="LEFT" />
-            </yAxis>
-        </LineChart>
-
+                <ComboBox fx:id="repeatDrive" layoutX="786.0" layoutY="201.0" prefHeight="60.0" prefWidth="296.0" promptText="Wiederholungen" style="-fx-background-color: white; -fx-padding: 0px 20px; -fx-border-color: rgb(128,128,128);  -fx-border-width: 0.5; -fx-border-radius: 5; ">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="täglich" />
+                            <String fx:value="wöchentlich" />
+                            <String fx:value="alle 2 Wochen" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </children></AnchorPane>
     </children>
 </AnchorPane>
