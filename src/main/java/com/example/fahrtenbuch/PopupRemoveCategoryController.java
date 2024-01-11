@@ -13,7 +13,6 @@ public class PopupRemoveCategoryController {
     private Label selectedCategory;
 
     public void setRemoveCategoryName(String selectedCategoryName) {
-        this.selectedCategoryName = selectedCategoryName;
         selectedCategory.setText('"' + selectedCategoryName + '"');
     }
 
