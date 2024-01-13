@@ -164,7 +164,11 @@ public class OverviewController implements Initializable{
         Integer day = parseTextFieldToInt(tagTextField.getText());
         String category = kategoryTF.getValue();
 
-        if (year != null) {
+        if (year == null) {
+
+            showAlert(Alert.AlertType.ERROR,"Fehler","Es muss ein Jahr eingegeben werden.");
+            return;
+        }else{
             queryBuilder.append(" AND YEAR(drive_date) = ").append(year);
         }
 
@@ -281,6 +285,11 @@ public class OverviewController implements Initializable{
         updateCheart(Year.now().getValue());
     }
 
-
+    private void showAlert(Alert.AlertType alertType, String title, String headerText) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
+    }
 
 }
