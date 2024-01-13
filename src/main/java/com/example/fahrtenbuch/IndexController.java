@@ -263,6 +263,8 @@ public class IndexController{
             categoryDriveFacade.persistCategoryDrive(categoryDrive);
         }
 
+        driveFacade.updateOdometerIfCompleted(driveFacade.getLastDriveId());
+
         handleBtnCreateRide(event);
 
     }

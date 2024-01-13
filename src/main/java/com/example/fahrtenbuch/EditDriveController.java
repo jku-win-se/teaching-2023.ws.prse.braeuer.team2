@@ -245,6 +245,10 @@ public class EditDriveController {
             categoryDriveFacade.changeCategoryByDriveID(selectedDrive.getDriveId(), selectedCategory.getCategoryId());
         }
 
+        if(this.selectedDrive.getStatus().toString()!="ABGESCHLOSSEN"){
+            driveFacade.updateOdometerIfCompleted(selectedDrive.getDriveId());
+        }
+
         handleFahrtenbucherPage(event);
 
 
