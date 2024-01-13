@@ -4,6 +4,7 @@
 //
 
 package com.example.fahrtenbuch;
+import com.example.fahrtenbuch.business.CategoryFacade;
 import com.example.fahrtenbuch.entities.*;
 
 import com.example.fahrtenbuch.business.DatabaseConnection;
@@ -18,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -36,6 +38,8 @@ public class EditDriveController {
     private Alert alert;
     private Drive selectedDrive;
     @FXML
+    private TextField datumTF;
+    @FXML
     private TextField AbfahrtTF;
     @FXML
     private TextField ankunftTF;
@@ -45,6 +49,28 @@ public class EditDriveController {
     private TextField aktiveFahTF;
     @FXML
     private TextField kfzTF;
+
+    @FXML
+    public ComboBox<String> kategoriesTF;
+
+    @FXML
+    public void initialize() {
+        initializeCategoryDropdown();
+    }
+
+
+    private void initializeCategoryDropdown() {
+        CategoryFacade categoryFacade = new CategoryFacade();
+        ObservableList<Category> categories = FXCollections.observableArrayList(categoryFacade.getAllCategories());
+
+        ObservableList<String> categoryNames = FXCollections.observableArrayList();
+        for (Category category : categories) {
+            categoryNames.add(category.toString());
+        }
+
+        kategoriesTF.setItems(categoryNames);
+    }
+
 
     public EditDriveController() {
         this.databaseConnection.getConnection();
