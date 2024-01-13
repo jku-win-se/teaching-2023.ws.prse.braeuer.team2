@@ -311,7 +311,7 @@ public class FahrtenbucherController implements Initializable{
 
     @FXML
     void completeTFActionBtn(ActionEvent event) {
-        handleStatusFilter("COMPLETED");
+        handleStatusFilter("ABGESCHLOSSEN");
     }
 
 

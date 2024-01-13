@@ -4,11 +4,9 @@
 //
 
 package com.example.fahrtenbuch;
-import com.example.fahrtenbuch.business.CategoryFacade;
+import com.example.fahrtenbuch.business.*;
 import com.example.fahrtenbuch.entities.*;
 
-import com.example.fahrtenbuch.business.DatabaseConnection;
-import com.example.fahrtenbuch.business.DriveFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,6 +27,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EditDriveController {
@@ -170,13 +169,101 @@ public class EditDriveController {
         DriveFacade driveFacade = new DriveFacade();
         driveFacade.deleteDriveById(this.selectedDrive.getDriveId());
         handleFahrtenbucherPage(event);
-
     }
+
 
     @FXML
     private void saveChanges(ActionEvent event) throws IOException {
 
+        if (kfzTF.getText().isEmpty() || datumTF.getText().isEmpty()) {
+
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Bitte füllen Sie Fahrzeug und Datum aus.");
+            return;
+        }
+
+        VehicleFacade vehicleFacade = new VehicleFacade();
+        Vehicle vehicle = vehicleFacade.getVehicleByLicensePlate(kfzTF.getText());
+        if (vehicle == null) {
+
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Fahrzeug mit Kennzeichen " + kfzTF.getText() + " nicht gefunden.");
+            return;
+        }
+        Integer vehicleId = vehicleFacade.getVehicleIdByLicensePlate(kfzTF.getText());
+
+        Drive drive;
+
+        if (!abfahrtTF.getText().isEmpty() && !ankunftTF.getText().isEmpty() && !gefahreneKmTF.getText().isEmpty() && !aktiveFahTF.getText().isEmpty()) {
+
+            drive = new Drive(
+                    vehicleId,
+                    Date.valueOf(datumTF.getText()),
+                    Time.valueOf(validateAndParseTime(abfahrtTF.getText()).toLocalTime()),
+                    Time.valueOf(validateAndParseTime(ankunftTF.getText()).toLocalTime()),
+                    Integer.parseInt(aktiveFahTF.getText()),
+                    Double.parseDouble(gefahreneKmTF.getText())
+            );
+        } else if (!abfahrtTF.getText().isEmpty()) {
+
+            drive = new Drive(
+                    vehicleId,
+                    Date.valueOf(datumTF.getText()),
+                    Time.valueOf(validateAndParseTime(abfahrtTF.getText()).toLocalTime())
+
+            );
+        } else if (!datumTF.getText().isEmpty()) {
+            drive = new Drive(
+                    vehicleId,
+                    Date.valueOf(datumTF.getText())
+            );
+        } else {
+
+            String datumText = datumTF.getText();
+            if (datumText.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Fehler", "Bitte geben Sie ein Datum ein.");
+                return;
+            }
+
+            try {
+                Date.valueOf(datumText);
+            } catch (IllegalArgumentException e) {
+                showAlert(Alert.AlertType.ERROR, "Fehler", "Ungültiges Datumsformat. Verwenden Sie das Format 'yyyy-MM-dd'.");
+                return;
+            }
+
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Bitte füllen Sie die erforderlichen Felder aus.");
+            return;
+        }
+
+        driveFacade.updateDrive(selectedDrive.getDriveId(), drive);
+
+        CategoryFacade categoryFacade = new CategoryFacade();
+
+        Category selectedCategory = categoryFacade.getCategoryByName(kategoriesTF.getValue());
+
+        if (selectedCategory != null) {
+            CategoryDriveFacade categoryDriveFacade = new CategoryDriveFacade();
+            categoryDriveFacade.changeCategoryByDriveID(selectedDrive.getDriveId(), selectedCategory.getCategoryId());
+        }
+
         handleFahrtenbucherPage(event);
 
+
+    }
+
+    private Time validateAndParseTime(String timeString) {
+        try {
+            return Time.valueOf(timeString);
+        } catch (IllegalArgumentException e) {
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Ungültiges Zeitformat. Verwenden Sie das Format 'hh:mm:ss'.");
+            throw e;
+        }
+    }
+
+
+    private void showAlert(Alert.AlertType alertType, String title, String headerText) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
     }
 }

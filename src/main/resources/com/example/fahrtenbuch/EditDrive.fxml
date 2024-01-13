@@ -93,7 +93,7 @@
                   <TextField fx:id="aktiveFahTF" layoutX="25.0" layoutY="137.0" prefHeight="49.0" prefWidth="296.0" promptText="Stehzeit" style="-fx-padding: 0px 20px;" />
                   <TextField fx:id="gefahreneKmTF" layoutX="25.0" layoutY="215.0" prefHeight="49.0" prefWidth="296.0" promptText="gefahrene km" style="-fx-padding: 0px 20px;" />
                   <TextField fx:id="datumTF" layoutX="25.0" layoutY="291.0" prefHeight="49.0" prefWidth="296.0" promptText="Datum" style="-fx-padding: 0px 20px;" />
-                  <TextField fx:id="AbfahrtTF" layoutX="408.0" layoutY="61.0" prefHeight="49.0" prefWidth="177.0" promptText="Abfahrtszeit" style="-fx-padding: 0px 20px;" />
+                  <TextField fx:id="abfahrtTF" layoutX="408.0" layoutY="61.0" prefHeight="49.0" prefWidth="177.0" promptText="Abfahrtszeit" style="-fx-padding: 0px 20px;" />
                   <TextField fx:id="ankunftTF" layoutX="408.0" layoutY="137.0" prefHeight="49.0" prefWidth="177.0" promptText="Ankunftszeit" style="-fx-padding: 0px 20px;" />
                   <ComboBox fx:id="kategoriesTF" layoutX="408.0" layoutY="215.0" prefHeight="49.0" prefWidth="296.0" promptText="Kategorie (optional)" style="-fx-background-color: white; -fx-padding: 0px 20px; -fx-border-color: rgb(128,128,128);  -fx-border-width: 0.5; -fx-border-radius: 5; ">
                      <items>

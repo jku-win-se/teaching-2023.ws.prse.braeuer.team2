@@ -357,10 +357,33 @@ public class DriveFacade {
         return timeDiffSeconds;
     }
 
+    public void updateDrive(int driveId, Drive updatedDrive) {
+        String query = "UPDATE drive " +
+                "SET vehicle_id = ?, " +
+                "    drive_date = ?, " +
+                "    departure_time = ?, " +
+                "    arrival_time = ?, " +
+                "    waiting_time = ?, " +
+                "    driven_kilometres = ?, " +
+                "    status = ? " +
+                "WHERE drive_id = ?";
 
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, updatedDrive.getVehicleId());
+            preparedStatement.setDate(2, updatedDrive.getDate());
+            preparedStatement.setTime(3, updatedDrive.getDepartureTime());
+            preparedStatement.setTime(4, updatedDrive.getArrivalTime());
+            preparedStatement.setInt(5, updatedDrive.getWaitingTime());
+            preparedStatement.setDouble(6, updatedDrive.getDrivenKilometres());
+            preparedStatement.setString(7, updatedDrive.getStatus().toString());
+            preparedStatement.setInt(8, driveId);
 
-
-
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
