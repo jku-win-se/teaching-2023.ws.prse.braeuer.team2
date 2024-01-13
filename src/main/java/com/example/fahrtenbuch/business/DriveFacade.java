@@ -177,23 +177,25 @@ public class DriveFacade {
 
 
 
-    public String getLicensePlateByDriveId(int dID) {
-        String query = "SELECT * FROM `vehicle` WHERE vehicle_id=?";
-        String str="";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-            preparedStatement.setInt(1, dID);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
+    public String getLicensePlateByDriveId(int driveId) {
+        String query = "SELECT d.drive_id, v.license_plate " +
+                "FROM drive d " +
+                "JOIN vehicle v ON d.vehicle_id = v.vehicle_id " +
+                "WHERE d.drive_id = ?";
 
-                    str = resultSet.getString("license_plate");
-                    //System.out.println("license plate"+str);
-                }
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, driveId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("license_plate");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return str;
+        return null;
     }
 
     public String getCategoryNameByDriveId(int driveId) {
