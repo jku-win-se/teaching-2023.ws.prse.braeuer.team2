@@ -325,7 +325,7 @@ public class IndexController{
             return Time.valueOf(timeString);
         } catch (IllegalArgumentException e) {
             showAlert(Alert.AlertType.ERROR, "Fehler", "Ungültiges Zeitformat. Verwenden Sie das Format 'hh:mm:ss'.");
-            throw e; // Re-throw the exception to stop further processing
+            throw e;
         }
     }
 

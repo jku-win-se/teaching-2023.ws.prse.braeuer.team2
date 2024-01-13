@@ -66,7 +66,24 @@ public class CategoryDriveFacade {
             e.printStackTrace();
 
         }
-
-
     }
+
+    public void changeCategoryByDriveID(Integer driveId, Integer newCategoryId) {
+        String updateQuery = "UPDATE category_drive SET category_id = ? WHERE drive_id = ?";
+
+        try {
+            if (driveId == null || newCategoryId == null) {
+                throw new IllegalArgumentException("driveId and newCategoryId must not be null.");
+            }
+
+            PreparedStatement updateStatement = conn.prepareStatement(updateQuery);
+            updateStatement.setInt(1, newCategoryId);
+            updateStatement.setInt(2, driveId);
+            updateStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

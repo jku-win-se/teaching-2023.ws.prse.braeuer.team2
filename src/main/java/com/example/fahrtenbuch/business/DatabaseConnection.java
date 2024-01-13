@@ -91,7 +91,7 @@ public class DatabaseConnection {
             statement.executeUpdate(createCategory);
             statement.executeUpdate(createCategoryDrive);
 
-            VehicleFacade vehicleFacade = new VehicleFacade();
+            /*VehicleFacade vehicleFacade = new VehicleFacade();
             vehicleFacade.persistVehicle(new Vehicle("testlicense", 123456.0));
             vehicleFacade.persistVehicle(new Vehicle("secondlicense", 100.0));
             //vehicleFacade.deleteVehicleById(2);
