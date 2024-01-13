@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="140.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fahrtenbuch.PopupRemoveCategoryController">
+    <children>
+        <AnchorPane prefHeight="140.0" prefWidth="280.0">
+            <children>
+                <Label fx:id="selectedCategory" layoutX="22.0" layoutY="50.0" prefHeight="40.0" prefWidth="212.0" style= "-fx-font-size: 15px;" alignment="CENTER" />
+                <Button layoutX="22.0" layoutY="100.0" mnemonicParsing="false" onAction="#removeCategory" prefHeight="30.0" prefWidth="100.0" text="Löschen" />
+                <Button layoutX="132.0" layoutY="100.0" mnemonicParsing="false" onAction="#closePopup" prefHeight="30.0" prefWidth="100.0" text="Schließen" />
+                <Label layoutX="26.0" layoutY="25.0" text="Folgende Kategorie wird gelöscht:">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

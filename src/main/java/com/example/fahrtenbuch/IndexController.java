@@ -330,5 +330,52 @@ public class IndexController{
             throw e; // Re-throw the exception to stop further processing
         }
     }
+
+    @FXML
+    public void showEditCategoryPopup(ActionEvent event) throws IOException {
+        String selectedCategoryName = kategoriesTF.getValue();
+        if (selectedCategoryName == null || selectedCategoryName.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Bitte wählen Sie eine Kategorie aus.");
+            return;
+        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PopupEditCategory.fxml"));
+        Parent root = loader.load();
+
+        PopupEditCategoryController popupController = loader.getController();
+        popupController.setEditCategoryField(selectedCategoryName);
+
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setScene(new Scene(root));
+
+        popupStage.show();
+
+        ((Node) event.getSource()).getScene().getWindow().requestFocus();
+    }
+
+
+    @FXML
+    public void showRemoveCategoryPopup(ActionEvent event) throws IOException {
+        String selectedCategoryName = kategoriesTF.getValue();
+        if (selectedCategoryName == null || selectedCategoryName.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Bitte wählen Sie eine Kategorie aus.");
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PopupRemoveCategory.fxml"));
+        Parent root = loader.load();
+
+        PopupRemoveCategoryController popupController = loader.getController();
+        popupController.setRemoveCategoryName(selectedCategoryName);
+
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setScene(new Scene(root));
+
+        popupStage.show();
+
+        ((Node) event.getSource()).getScene().getWindow().requestFocus();
+    }
+
 }
 

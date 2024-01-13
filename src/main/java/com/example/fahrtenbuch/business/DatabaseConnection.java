@@ -31,6 +31,8 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
 
+
+
         return conn;
     }
 
@@ -72,8 +74,8 @@ public class DatabaseConnection {
                 "    category_id INT,\n" +
                 "    drive_id INT,\n" +
                 "    PRIMARY KEY (category_id, drive_id),\n" +
-                "    FOREIGN KEY (category_id) REFERENCES category(category_id),\n" +
-                "    FOREIGN KEY (drive_id) REFERENCES drive(drive_id)\n" +
+                "    FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE CASCADE ,\n" +
+                "    FOREIGN KEY (drive_id) REFERENCES drive(drive_id) ON DELETE CASCADE\n" +
                 ");";
 
         try {

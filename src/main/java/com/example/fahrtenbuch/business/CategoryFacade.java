@@ -94,12 +94,37 @@ public class CategoryFacade {
 
     }
 
-    public void deleteCatgoryById(Integer id) {
+    public void deleteCategoryById(Integer id) {
         String query = "DELETE FROM category WHERE category_id = ?";
 
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCategoryByName(String name) {
+        String query = "DELETE FROM category WHERE category_name = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCategoryName(String oldName, String newName) {
+        String updateQuery = "UPDATE category SET category_name = ? WHERE category_name = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(updateQuery);
+            preparedStatement.setString(1, newName);
+            preparedStatement.setString(2, oldName);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
