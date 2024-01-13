@@ -169,12 +169,14 @@ public class EditDriveController {
 
         DriveFacade driveFacade = new DriveFacade();
         driveFacade.deleteDriveById(this.selectedDrive.getDriveId());
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+        handleFahrtenbucherPage(event);
+
     }
 
     @FXML
     private void saveChanges(ActionEvent event) throws IOException {
+
+        handleFahrtenbucherPage(event);
 
     }
 }
