@@ -156,10 +156,6 @@ public class DriveFacade {
         }
     }
 
-//    public static void main(String args[]) {
-//    	DriveFacade db = new DriveFacade();
-//    	db.deleteDriveById(43);
-//    }
 
     public Integer getLastDriveId() {
         Integer lastDriveId = null;
@@ -180,13 +176,6 @@ public class DriveFacade {
 
 
 
-
-    /*
-     *
-     * new method's
-     * need for filter page
-     *
-     * */
 
     public String getLicensePlateByDriveId(int dID) {
         String query = "SELECT * FROM `vehicle` WHERE vehicle_id=?";
@@ -325,13 +314,6 @@ public class DriveFacade {
             super(message);
         }
     }
-
-
-    /*
-     *
-     * second term edition & add some method
-     *
-     */
 
 
     public double getAverageSpeedByDriveId(int driveId) throws SQLException {
