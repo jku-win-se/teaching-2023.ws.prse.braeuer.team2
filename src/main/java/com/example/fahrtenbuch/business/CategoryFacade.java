@@ -117,4 +117,17 @@ public class CategoryFacade {
             e.printStackTrace();
         }
     }
+
+    public void updateCategoryName(String oldName, String newName) {
+        String updateQuery = "UPDATE category SET category_name = ? WHERE category_name = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(updateQuery);
+            preparedStatement.setString(1, newName);
+            preparedStatement.setString(2, oldName);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
