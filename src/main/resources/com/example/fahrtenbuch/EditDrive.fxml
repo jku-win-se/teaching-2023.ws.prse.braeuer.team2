@@ -102,12 +102,12 @@
                   </ComboBox>
                </children>
             </Pane>
-            <Button fx:id="btnSaveChanges" layoutX="402.0" layoutY="542.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="338.0" style="-fx-background-color: #333E50; -fx-border-radius: 10px; -fx-cursor: pointer;" text="ÄNDERUNGEN SPEICHERN" textFill="WHITE">
+            <Button layoutX="402.0" layoutY="542.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="49.0" prefWidth="338.0" style="-fx-background-color: #333E50; -fx-border-radius: 10px; -fx-cursor: pointer;" text="ÄNDERUNGEN SPEICHERN" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnDeleteRide" layoutX="800.0" layoutY="542.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="360.0" style="-fx-background-color: #333E50; -fx-border-radius: 10px; -fx-cursor: pointer;" text="FAHRT LÖSCHEN" textFill="WHITE">
+            <Button layoutX="800.0" layoutY="542.0" mnemonicParsing="false" onAction="#deleteRide" prefHeight="49.0" prefWidth="360.0" style="-fx-background-color: #333E50; -fx-border-radius: 10px; -fx-cursor: pointer;" text="FAHRT LÖSCHEN" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

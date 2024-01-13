@@ -89,7 +89,6 @@ public class IndexController{
         CategoryFacade categoryFacade = new CategoryFacade();
         ObservableList<Category> categories = FXCollections.observableArrayList(categoryFacade.getAllCategories());
 
-        // Konvertiere ObservableList<Category> in ObservableList<String>
         ObservableList<String> categoryNames = FXCollections.observableArrayList();
         for (Category category : categories) {
             categoryNames.add(category.toString());
@@ -274,7 +273,6 @@ public class IndexController{
         CategoryFacade categoryFacade = new CategoryFacade();
         ObservableList<Category> categories = FXCollections.observableArrayList(categoryFacade.getAllCategories());
 
-        // Konvertiere ObservableList<Category> in ObservableList<String>
         ObservableList<String> categoryNames = FXCollections.observableArrayList();
         for (Category category : categories) {
             categoryNames.add(category.toString());

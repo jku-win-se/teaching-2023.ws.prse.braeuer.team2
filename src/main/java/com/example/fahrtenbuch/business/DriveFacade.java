@@ -156,10 +156,6 @@ public class DriveFacade {
         }
     }
 
-//    public static void main(String args[]) {
-//    	DriveFacade db = new DriveFacade();
-//    	db.deleteDriveById(43);
-//    }
 
     public Integer getLastDriveId() {
         Integer lastDriveId = null;
@@ -181,30 +177,25 @@ public class DriveFacade {
 
 
 
-    /*
-     *
-     * new method's
-     * need for filter page
-     *
-     * */
+    public String getLicensePlateByDriveId(int driveId) {
+        String query = "SELECT d.drive_id, v.license_plate " +
+                "FROM drive d " +
+                "JOIN vehicle v ON d.vehicle_id = v.vehicle_id " +
+                "WHERE d.drive_id = ?";
 
-    public String getLicensePlateByDriveId(int dID) {
-        String query = "SELECT * FROM `vehicle` WHERE vehicle_id=?";
-        String str="";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-            preparedStatement.setInt(1, dID);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, driveId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-                    str = resultSet.getString("license_plate");
-                    //System.out.println("license plate"+str);
-                }
+            if (resultSet.next()) {
+                return resultSet.getString("license_plate");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return str;
+        return null;
     }
 
     public String getCategoryNameByDriveId(int driveId) {
@@ -325,13 +316,6 @@ public class DriveFacade {
             super(message);
         }
     }
-
-
-    /*
-     *
-     * second term edition & add some method
-     *
-     */
 
 
     public double getAverageSpeedByDriveId(int driveId) throws SQLException {
