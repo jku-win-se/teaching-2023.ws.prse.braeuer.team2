@@ -40,7 +40,7 @@ public class EditDriveController {
     @FXML
     private TextField datumTF;
     @FXML
-    private TextField AbfahrtTF;
+    private TextField abfahrtTF;
     @FXML
     private TextField ankunftTF;
     @FXML
@@ -155,7 +155,7 @@ public class EditDriveController {
             Integer waitingTime = this.selectedDrive.getWaitingTime();
             String currentCategory = driveFacade.getCategoryNameByDriveId(this.selectedDrive.getDriveId());
             this.kfzTF.setText(driveFacade.getLicensePlateByDriveId(this.selectedDrive.getDriveId()));
-            this.AbfahrtTF.setText(departureTime != null ? departureTime.toString() : "");
+            this.abfahrtTF.setText(departureTime != null ? departureTime.toString() : "");
             this.ankunftTF.setText(arrivalTime != null ? arrivalTime.toString() : "");
             this.gefahreneKmTF.setText(drivenKilometres != null ? drivenKilometres.toString() : "");
             this.aktiveFahTF.setText(waitingTime != null ? waitingTime.toString() : "");
