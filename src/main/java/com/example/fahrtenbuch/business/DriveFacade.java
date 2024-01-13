@@ -385,5 +385,38 @@ public class DriveFacade {
         }
     }
 
+    public void updateOdometerIfCompleted(int driveId) {
+        String query = "SELECT status, driven_kilometres, vehicle_id FROM drive WHERE drive_id = ?";
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.setInt(1, driveId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String status = resultSet.getString("status");
+                double drivenKilometres = resultSet.getDouble("driven_kilometres");
+                int vehicleId = resultSet.getInt("vehicle_id");
+
+                if ("ABGESCHLOSSEN".equals(status)) {
+                    updateVehicleOdometer(vehicleId, drivenKilometres);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateVehicleOdometer(int vehicleId, double drivenKilometres) {
+        String updateQuery = "UPDATE vehicle SET odometer = odometer + ? WHERE vehicle_id = ?";
+
+        try (PreparedStatement updateStatement = conn.prepareStatement(updateQuery)) {
+            updateStatement.setDouble(1, drivenKilometres);
+            updateStatement.setInt(2, vehicleId);
+
+            updateStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
