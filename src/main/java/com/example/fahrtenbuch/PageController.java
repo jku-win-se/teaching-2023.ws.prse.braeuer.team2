@@ -142,17 +142,6 @@ public class PageController {
     @FXML
     private void handleBtnCreateDrive(ActionEvent event) throws IOException {
 
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FahrtenbucherPage.fxml"));
-        Parent root = loader.load();
-
-        FahrtenbucherController fahrtenbucherController = loader.getController();
-        fahrtenbucherController.setTableLogbook(fahrtListe);
-
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
     }
 
     @FXML
@@ -203,6 +192,10 @@ public class PageController {
             driveFacade.persistRecurringDrive(vehicleId, startDate, endDate, interval);
 
             showAlert(Alert.AlertType.INFORMATION, "Erfolg", "Wiederholende Fahrten wurden erfolgreich angelegt.");
+
+            kfzTF.clear();
+            bisDatumTF.clear();
+            vonDatumTF.clear();
 
 
         } catch (IllegalArgumentException e) {
