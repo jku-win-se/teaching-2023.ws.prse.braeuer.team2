@@ -77,6 +77,7 @@ public class IndexController{
 
         driveFacade = new DriveFacade();
         categoryFacade = new CategoryFacade();
+
     }
 
     @FXML
@@ -294,6 +295,8 @@ public class IndexController{
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(root));
 
+        popupStage.setOnHidden(e -> initializeCategoryDropdown());
+
         popupStage.show();
 
         ((Node) event.getSource()).getScene().getWindow().requestFocus();
@@ -348,6 +351,8 @@ public class IndexController{
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(root));
 
+        popupStage.setOnHidden(e -> initializeCategoryDropdown());
+
         popupStage.show();
 
         ((Node) event.getSource()).getScene().getWindow().requestFocus();
@@ -371,6 +376,8 @@ public class IndexController{
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(root));
+
+        popupStage.setOnHidden(e -> initializeCategoryDropdown());
 
         popupStage.show();
 
