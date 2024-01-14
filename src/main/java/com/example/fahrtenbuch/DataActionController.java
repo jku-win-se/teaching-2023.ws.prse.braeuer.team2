@@ -101,9 +101,6 @@ public class DataActionController {
 
     @FXML
     private void handleFahrtenbucherPage(ActionEvent event) throws IOException {
-        Drive drive = new Drive(1, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now()), Time.valueOf(LocalTime.now()), 3, 3.0);
-        this.drives = this.driveFacade.getAllDrives();
-        this.drives.add(drive);
         this.fahrtListe = FXCollections.observableArrayList(this.driveFacade.getAllDrives());
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("FahrtenbucherPage.fxml"));
         Parent overviewPage = (Parent)loader.load();

@@ -77,6 +77,7 @@ public class IndexController{
 
         driveFacade = new DriveFacade();
         categoryFacade = new CategoryFacade();
+
     }
 
     @FXML
@@ -99,9 +100,6 @@ public class IndexController{
 
     @FXML
     private void handleFahrtenbucherPage(ActionEvent event) throws IOException {
-        Drive drive = new Drive(1, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now()),Time.valueOf(LocalTime.now()), 3, 3.0);
-        drives = driveFacade.getAllDrives();
-        drives.add(drive);
 
         fahrtListe = FXCollections.observableArrayList(driveFacade.getAllDrives());
 
@@ -294,6 +292,8 @@ public class IndexController{
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(root));
 
+        popupStage.setOnHidden(e -> initializeCategoryDropdown());
+
         popupStage.show();
 
         ((Node) event.getSource()).getScene().getWindow().requestFocus();
@@ -348,6 +348,8 @@ public class IndexController{
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(root));
 
+        popupStage.setOnHidden(e -> initializeCategoryDropdown());
+
         popupStage.show();
 
         ((Node) event.getSource()).getScene().getWindow().requestFocus();
@@ -371,6 +373,8 @@ public class IndexController{
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(root));
+
+        popupStage.setOnHidden(e -> initializeCategoryDropdown());
 
         popupStage.show();
 
