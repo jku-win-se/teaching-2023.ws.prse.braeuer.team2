@@ -8,10 +8,10 @@ module com.example.fahrtenbuch {
     requires org.json;
 
 
-    opens model;
-        opens com.example.fahrtenbuch to javafx.fxml;
-        exports com.example.fahrtenbuch;
-        exports com.example.fahrtenbuch.business;
+
+    opens com.example.fahrtenbuch to javafx.fxml;
+    exports com.example.fahrtenbuch;
+    exports com.example.fahrtenbuch.business;
     exports com.example.fahrtenbuch.entities;
     opens com.example.fahrtenbuch.entities to javafx.fxml;
 }
