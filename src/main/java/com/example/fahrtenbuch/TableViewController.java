@@ -28,8 +28,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class TableViewController {
-
+public class TableViewController{
     public TableColumn<Drive, String> categoryColumn;
     public TextField sumTextField;
     @FXML
@@ -46,6 +45,8 @@ public class TableViewController {
     private DriveFacade driveFacade;
     private DatabaseConnection databaseConnection;
     private Alert alert;
+
+    private Category category;
     @FXML
     List<Drive> drives = new ArrayList<>();
     @FXML
@@ -131,22 +132,11 @@ public class TableViewController {
         stage.show();
     }
 
-    private void initializeCategoryDropdown() {
-        CategoryFacade categoryFacade = new CategoryFacade();
-        ObservableList<Category> categories = FXCollections.observableArrayList(categoryFacade.getAllCategories());
-
-        ObservableList<String> categoryNames = FXCollections.observableArrayList();
-        for (Category category : categories) {
-            categoryNames.add(category.toString());
-        }
-
-        kategoriesTF.setItems(categoryNames);
-    }
-
-
     @FXML
     private void initialize() {
-        initializeCategoryDropdown();
+        List<String> categoryNames = driveFacade.getAllCategoryNames();
+        categoryNames.add(0, null);
+        kategoriesTF.getItems().addAll(categoryNames);
     }
 
 
@@ -154,44 +144,73 @@ public class TableViewController {
     private void filterBtnAct(ActionEvent event) {
         String yearText = jahrTextField.getText();
         String monthText = monatTextField.getText();
+        String selectedCategory = kategoriesTF.getValue();
 
-        if (!yearText.matches("\\d{4}")) {
-            showAlert(Alert.AlertType.ERROR, "Ungültige Eingabe", "Bitte geben Sie ein gültiges Jahr im Format JJJJ ein.");
-            return;
-        }
-
-        int selectedYear = Integer.parseInt(yearText);
+        int selectedYear = 0;
         int selectedMonth = 0;
 
-        if (!monthText.isEmpty()) {
-            try {
+        try {
+            if (!yearText.isEmpty()) {
+                selectedYear = Integer.parseInt(yearText);
+
+                if (!yearText.matches("\\d{4}")) {
+                    showAlert(Alert.AlertType.ERROR, "Ungültige Eingabe", "Bitte geben Sie ein gültiges Jahr im Format JJJJ ein.");
+                    return;
+                }
+            }
+
+            if (!monthText.isEmpty()) {
                 selectedMonth = Integer.parseInt(monthText);
 
                 if (selectedMonth < 1 || selectedMonth > 12) {
                     showAlert(Alert.AlertType.ERROR, "Ungültige Eingabe", "Bitte geben Sie einen Monat zwischen 1 und 12 ein.");
                     return;
                 }
-            } catch (NumberFormatException e) {
-                showAlert(Alert.AlertType.ERROR, "Ungültige Eingabe", "Bitte geben Sie einen gültigen Monat ein.");
-                return;
             }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Ungültige Eingabe", "Bitte geben Sie gültige Zahlen für Jahr und Monat ein.");
+            return;
         }
 
-        if (selectedYear > 0) {
-            if (selectedMonth > 0) {
-                filterByYearAndMonth(selectedYear, selectedMonth);
-            } else {
-                filterByYear(selectedYear);
-            }
 
+        if (selectedYear > 0 && monthText.isEmpty()){
+            filterByYear(selectedYear);
             if (fahrtListe.isEmpty()) {
-                showAlert(Alert.AlertType.INFORMATION, "Keine Einträge gefunden", "Für den ausgewählten Zeitraum gibt es keine Einträge.");
+                showAlert(Alert.AlertType.INFORMATION, "Keine Einträge gefunden", "Für die eingegebenen Daten wurden keine Einträge gefunden");
             }
-
-            updateTable();
-        } else {
-            showAlert(Alert.AlertType.INFORMATION, "Ungültige Eingabe", "Bitte geben Sie ein gültiges Jahr ein.");
         }
+
+        if (selectedMonth > 0 && yearText.isEmpty()){
+            filterByMonth(selectedMonth);
+            if (fahrtListe.isEmpty()) {
+                showAlert(Alert.AlertType.INFORMATION, "Keine Einträge gefunden", "Für die eingegebenen Daten wurden keine Einträge gefunden");
+            }
+        }
+
+        if (selectedYear > 0 && selectedMonth > 0){
+            filterByYearAndMonth(selectedYear, selectedMonth);
+            if (fahrtListe.isEmpty()) {
+                showAlert(Alert.AlertType.INFORMATION, "Keine Einträge gefunden", "Für die eingegebenen Daten wurden keine Einträge gefunden");
+            }
+        }
+
+        if(selectedMonth > 0 && selectedYear > 0 && selectedCategory != null && !selectedCategory.isEmpty()){
+            filterByYearMonthCategory(selectedYear, selectedMonth, selectedCategory);
+        }
+
+        if (selectedYear > 0 && monthText.isEmpty() && selectedCategory != null && !selectedCategory.isEmpty()) {
+            filterByYearAndCategory(selectedYear, selectedCategory);
+        }
+
+        if (selectedMonth > 0 && yearText.isEmpty() && selectedCategory != null && !selectedCategory.isEmpty()) {
+                filterByMonthAndCategory(selectedMonth, selectedCategory);
+        }
+
+        if (selectedCategory != null && !selectedCategory.isEmpty() && yearText.isEmpty() && monthText.isEmpty()) {
+            filterByCategory(selectedCategory);
+        }
+        updateTable();
+
     }
 
     private void updateTable() {
@@ -206,6 +225,17 @@ public class TableViewController {
             int month = driveDate.toLocalDate().getMonthValue();
             return new SimpleObjectProperty<>(month);
         });
+
+        categoryColumn.setCellValueFactory(cellData -> {
+            StringProperty categoryValue = new SimpleStringProperty();
+            Integer driveId = cellData.getValue().getDriveId();
+            if (driveId != null) {
+                String categoryName = driveFacade.getCategoryNameByDriveId(driveId);
+                categoryValue.set(categoryName);
+            }
+            return categoryValue;
+        });
+
         totalKilometres();
         totalKilometersColumn.setCellValueFactory(new PropertyValueFactory<>("drivenKilometres"));
     }
@@ -228,10 +258,10 @@ public class TableViewController {
         sumTextField.setText(String.valueOf(totalKm));
     }
 
-    private void filterByYearAndMonth(int selectedYear, int selectedMonth) {
+    private void filterByYear(int selectedYear) {
         Predicate<Drive> filterPredicate = drive -> {
             LocalDate driveDate = drive.getDate().toLocalDate();
-            return driveDate.getYear() == selectedYear && driveDate.getMonthValue() == selectedMonth;
+            return driveDate.getYear() == selectedYear;
         };
 
         List<Drive> filteredDrives = driveFacade.getAllDrives().stream()
@@ -241,32 +271,86 @@ public class TableViewController {
         fahrtListe.setAll(filteredDrives);
     }
 
-    private void filterByYear(int selectedYear) {
-        List<Drive> allDrives = driveFacade.getAllDrives();
+    private void filterByMonth(int selectedMonth) {
+        Predicate<Drive> filterPredicate = drive -> {
+            LocalDate driveDate = drive.getDate().toLocalDate();
+            return driveDate.getMonthValue() == selectedMonth;
+        };
 
-        Map<YearMonth, Double> monthlyKilometers = new HashMap<>();
-
-        List<Drive> filteredDrives = allDrives.stream()
-                .filter(drive -> drive.getDate().toLocalDate().getYear() == selectedYear)
+        List<Drive> filteredDrives = driveFacade.getAllDrives().stream()
+                .filter(filterPredicate)
                 .collect(Collectors.toList());
 
-        for (Drive drive : filteredDrives) {
-            YearMonth yearMonth = YearMonth.from(drive.getDate().toLocalDate());
-            double kilometers = monthlyKilometers.getOrDefault(yearMonth, 0.0);
-            kilometers += drive.getDrivenKilometres();
-            monthlyKilometers.put(yearMonth, kilometers);
-        }
+        fahrtListe.setAll(filteredDrives);
+    }
 
-        ObservableList<Drive> list = monthlyKilometers.entrySet().stream()
-                .map(entry -> {
-                    Drive drive = new Drive();
-                    drive.setDate(Date.valueOf(entry.getKey().atDay(1)));
-                    drive.setDrivenKilometres(entry.getValue());
-                    return drive;
-                })
-                .collect(Collectors.collectingAndThen(Collectors.toList(), FXCollections::observableArrayList));
+    private void filterByYearAndMonth(int selectedYear, int selectedMonth) {
+        Predicate<Drive> filterPredicate = drive -> {
+            LocalDate driveDate = drive.getDate().toLocalDate();
+            return driveDate.getYear() == selectedYear && driveDate.getMonthValue() == selectedMonth;
 
-        fahrtListe.setAll(list);
+        };
+
+        List<Drive> filteredDrives = driveFacade.getAllDrives().stream()
+                .filter(filterPredicate)
+                .collect(Collectors.toList());
+
+        fahrtListe.setAll(filteredDrives);
+    }
+
+    private void filterByYearAndCategory(int selectedYear, String selectedCategory) {
+        Predicate<Drive> filterPredicate = drive -> {
+            LocalDate driveDate = drive.getDate().toLocalDate();
+            String category = driveFacade.getCategoryNameByDriveId(drive.getDriveId());
+            return driveDate.getYear() == selectedYear && selectedCategory.equals(category);
+        };
+
+        List<Drive> filteredDrives = driveFacade.getAllDrives().stream()
+                .filter(filterPredicate)
+                .collect(Collectors.toList());
+
+        fahrtListe.setAll(filteredDrives);
+    }
+
+    private void filterByMonthAndCategory(int selectedMonth, String selectedCategory) {
+        Predicate<Drive> filterPredicate = drive -> {
+            LocalDate driveDate = drive.getDate().toLocalDate();
+            String category = driveFacade.getCategoryNameByDriveId(drive.getDriveId());
+            return driveDate.getMonthValue() == selectedMonth && selectedCategory.equals(category);
+        };
+
+        List<Drive> filteredDrives = driveFacade.getAllDrives().stream()
+                .filter(filterPredicate)
+                .collect(Collectors.toList());
+
+        fahrtListe.setAll(filteredDrives);
+    }
+
+    private void filterByYearMonthCategory(int selectedYear, int selectedMonth, String selectedCategory) {
+        Predicate<Drive> filterPredicate = drive -> {
+            LocalDate driveDate = drive.getDate().toLocalDate();
+            String category = driveFacade.getCategoryNameByDriveId(drive.getDriveId());
+            return driveDate.getYear() == selectedYear && driveDate.getMonthValue() == selectedMonth && selectedCategory.equals(category);
+        };
+
+        List<Drive> filteredDrives = driveFacade.getAllDrives().stream()
+                .filter(filterPredicate)
+                .collect(Collectors.toList());
+
+        fahrtListe.setAll(filteredDrives);
+    }
+
+    private void filterByCategory(String selectedCategory) {
+        Predicate<Drive> filterPredicate = drive -> {
+            String category = driveFacade.getCategoryNameByDriveId(drive.getDriveId());
+            return selectedCategory.equals(category);
+        };
+
+        List<Drive> filteredDrives = driveFacade.getAllDrives().stream()
+                .filter(filterPredicate)
+                .collect(Collectors.toList());
+
+        fahrtListe.setAll(filteredDrives);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String headerText) {
