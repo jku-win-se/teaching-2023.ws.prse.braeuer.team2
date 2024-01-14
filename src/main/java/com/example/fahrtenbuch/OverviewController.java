@@ -135,9 +135,7 @@ public class OverviewController implements Initializable{
 
     @FXML
     private void handleFahrtenbucherPage(ActionEvent event) throws IOException {
-        Drive drive = new Drive(1, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now()), Time.valueOf(LocalTime.now()), 3, 3.0);
-        List<Drive> drives = this.driveFacade.getAllDrives();
-        drives.add(drive);
+
         this.fahrtListe = FXCollections.observableArrayList(this.driveFacade.getAllDrives());
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("FahrtenbucherPage.fxml"));
         Parent overviewPage = (Parent)loader.load();

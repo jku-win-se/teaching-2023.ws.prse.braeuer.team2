@@ -100,9 +100,6 @@ public class IndexController{
 
     @FXML
     private void handleFahrtenbucherPage(ActionEvent event) throws IOException {
-        Drive drive = new Drive(1, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now()),Time.valueOf(LocalTime.now()), 3, 3.0);
-        drives = driveFacade.getAllDrives();
-        drives.add(drive);
 
         fahrtListe = FXCollections.observableArrayList(driveFacade.getAllDrives());
 

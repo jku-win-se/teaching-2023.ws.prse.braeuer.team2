@@ -73,9 +73,6 @@ public class PageController {
 
     @FXML
     private void fahrtenbucherAction(ActionEvent event) throws IOException {
-        Drive drive = new Drive(1, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now()),Time.valueOf(LocalTime.now()), 3, 3.0);
-        List<Drive> drives = driveFacade.getAllDrives();
-        drives.add(drive);
 
         fahrtListe = FXCollections.observableArrayList(driveFacade.getAllDrives());
 
