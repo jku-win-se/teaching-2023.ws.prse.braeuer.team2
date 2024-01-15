@@ -45,6 +45,8 @@ import java.util.stream.Collectors;
 
 public class OverviewController implements Initializable{
     @FXML
+    public Button btnTableView;
+    @FXML
     private AnchorPane anchorPane;
 
     @FXML
@@ -283,11 +285,22 @@ public class OverviewController implements Initializable{
         updateCheart(Year.now().getValue());
     }
 
+
+    public void showTableView(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("TableView.fxml"));
+        Parent root = (Parent)loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+  
     private void showAlert(Alert.AlertType alertType, String title, String headerText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
         alert.showAndWait();
     }
+
 
 }

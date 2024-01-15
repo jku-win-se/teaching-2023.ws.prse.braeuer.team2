@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="584.0" prefWidth="915.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fahrtenbuch.OverviewController">
+<AnchorPane prefHeight="584.0" prefWidth="915.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fahrtenbuch.OverviewController">
     <children>
         <SplitPane layoutX="193.0" prefHeight="60.0" prefWidth="772.0" style="-fx-background-color: #343E51;">
             <items>
@@ -94,7 +94,7 @@
                 </image>
             </ImageView>
         </Pane>
-        <LineChart fx:id="lineChart" layoutX="224.0" layoutY="299.0" prefHeight="296.0" prefWidth="702.0">
+        <LineChart fx:id="lineChart" layoutX="225.0" layoutY="306.0" prefHeight="254.0" prefWidth="702.0">
             <xAxis>
                 <CategoryAxis side="BOTTOM" />
             </xAxis>
@@ -102,6 +102,7 @@
                 <NumberAxis side="LEFT" />
             </yAxis>
         </LineChart>
+      <Button fx:id="btnTableView" layoutX="783.0" layoutY="546.0" mnemonicParsing="false" onAction="#showTableView" prefHeight="29.0" prefWidth="131.0" text="Tabellenansicht " />
 
     </children>
 </AnchorPane>
