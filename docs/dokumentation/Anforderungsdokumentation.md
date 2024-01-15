@@ -26,9 +26,6 @@ Tabelle bearbeitet ( Spalten d. Geschw. + Datum) hinzugefügt: 4h\
 Analyse Graph (Übersicht Seite): 9,5\
 Dokumentation (Einleitung, Testdoku, Klassendoku): 4h
 
-
-
-
 ## Max Oberaigner 90,5h
 
 ### Organisatorisches und Planung
