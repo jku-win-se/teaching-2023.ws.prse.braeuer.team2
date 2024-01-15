@@ -47,12 +47,12 @@ Bugfixes: ca. 2,5 Stunden\
 Behebung von PMD Fehlern, etc: ca 2,5 Stunden
 
 ### Umsetzung von Anforderungen ca. 37 Stunden
-Umsetzung Backend und CRUD Operationen: ca. 6 Stunden\
-Fahrt erstellen: ca. 8 Stunden\
-Wiederholende Fahrt anlegen: ca. 4 Stunden\
-Fahrzeug anlegen: ca. 2 Stunden\
-Kategorie anlegen, ändern und löschen: ca. 6 Stunden\
-Fahrt bearbeiten und löschen: ca. 6 Stunden\
+1 Basisfunktion: Umsetzung Backend und CRUD Operationen: ca. 6 Stunden\
+1 Basisfunktion: Fahrt erstellen: ca. 8 Stunden\
+1 Basisfunktion Fahrzeug anlegen: ca. 2 Stunden\
+3, 4 Basisfunktion: Fahrt bearbeiten und löschen: ca. 6 Stunden\
+5 Basisfunktion Wiederholende Fahrt anlegen: ca. 4 Stunden\
+15 Verwalten und Anzeige von Fahrten: Kategorie anlegen, ändern und löschen: ca. 6 Stunden\
 Sonstiges: ca. 5 Stunden
 
 ### Dokumentationen ca. 6,5 Stunden
