@@ -56,16 +56,9 @@ public class TableViewController{
     public TableViewController() {
         databaseConnection = new DatabaseConnection();
         databaseConnection.getConnection();
-        alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Button-Klick");
-        alert.setHeaderText(null);
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.setStyle("-fx-font-family: 'Arial'; -fx-font-size: 14;");
-        alert.setDialogPane(dialogPane);
 
         driveFacade = new DriveFacade();
     }
-
     @FXML
     private void returnToStartBtn(ActionEvent event) throws IOException {;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
@@ -167,11 +160,15 @@ public class TableViewController{
                     return;
                 }
             }
+
+            if (yearText.isEmpty() && monthText.isEmpty() && selectedCategory == null){
+                showAlert(Alert.AlertType.ERROR, "Ungültige Eingabe", "Bitte geben Sie Werte ein, nach denen gefiltert werden soll.");
+                return;
+            }
         } catch (NumberFormatException e) {
             showAlert(Alert.AlertType.ERROR, "Ungültige Eingabe", "Bitte geben Sie gültige Zahlen für Jahr und Monat ein.");
             return;
         }
-
 
         if (selectedYear > 0 && monthText.isEmpty()){
             filterByYear(selectedYear);
@@ -203,11 +200,14 @@ public class TableViewController{
         }
 
         if (selectedMonth > 0 && yearText.isEmpty() && selectedCategory != null && !selectedCategory.isEmpty()) {
-                filterByMonthAndCategory(selectedMonth, selectedCategory);
+            filterByMonthAndCategory(selectedMonth, selectedCategory);
         }
 
         if (selectedCategory != null && !selectedCategory.isEmpty() && yearText.isEmpty() && monthText.isEmpty()) {
             filterByCategory(selectedCategory);
+            if (fahrtListe.isEmpty()) {
+                showAlert(Alert.AlertType.INFORMATION, "Keine Einträge gefunden", "Für die eingegebene Kategorie wurden keine Einträge gefunden");
+            }
         }
         updateTable();
 
@@ -258,7 +258,7 @@ public class TableViewController{
         sumTextField.setText(String.valueOf(totalKm));
     }
 
-    private void filterByYear(int selectedYear) {
+    public List<Drive> filterByYear(int selectedYear) {
         Predicate<Drive> filterPredicate = drive -> {
             LocalDate driveDate = drive.getDate().toLocalDate();
             return driveDate.getYear() == selectedYear;
@@ -269,9 +269,10 @@ public class TableViewController{
                 .collect(Collectors.toList());
 
         fahrtListe.setAll(filteredDrives);
+        return fahrtListe;
     }
 
-    private void filterByMonth(int selectedMonth) {
+    public List<Drive> filterByMonth(int selectedMonth) {
         Predicate<Drive> filterPredicate = drive -> {
             LocalDate driveDate = drive.getDate().toLocalDate();
             return driveDate.getMonthValue() == selectedMonth;
@@ -282,9 +283,10 @@ public class TableViewController{
                 .collect(Collectors.toList());
 
         fahrtListe.setAll(filteredDrives);
+        return fahrtListe;
     }
 
-    private void filterByYearAndMonth(int selectedYear, int selectedMonth) {
+    public List<Drive> filterByYearAndMonth(int selectedYear, int selectedMonth) {
         Predicate<Drive> filterPredicate = drive -> {
             LocalDate driveDate = drive.getDate().toLocalDate();
             return driveDate.getYear() == selectedYear && driveDate.getMonthValue() == selectedMonth;
@@ -296,6 +298,7 @@ public class TableViewController{
                 .collect(Collectors.toList());
 
         fahrtListe.setAll(filteredDrives);
+        return fahrtListe;
     }
 
     private void filterByYearAndCategory(int selectedYear, String selectedCategory) {
@@ -312,7 +315,7 @@ public class TableViewController{
         fahrtListe.setAll(filteredDrives);
     }
 
-    private void filterByMonthAndCategory(int selectedMonth, String selectedCategory) {
+    public List<Drive> filterByMonthAndCategory(int selectedMonth, String selectedCategory) {
         Predicate<Drive> filterPredicate = drive -> {
             LocalDate driveDate = drive.getDate().toLocalDate();
             String category = driveFacade.getCategoryNameByDriveId(drive.getDriveId());
@@ -324,9 +327,10 @@ public class TableViewController{
                 .collect(Collectors.toList());
 
         fahrtListe.setAll(filteredDrives);
+        return fahrtListe;
     }
 
-    private void filterByYearMonthCategory(int selectedYear, int selectedMonth, String selectedCategory) {
+    public List<Drive> filterByYearMonthCategory(int selectedYear, int selectedMonth, String selectedCategory) {
         Predicate<Drive> filterPredicate = drive -> {
             LocalDate driveDate = drive.getDate().toLocalDate();
             String category = driveFacade.getCategoryNameByDriveId(drive.getDriveId());
@@ -338,9 +342,10 @@ public class TableViewController{
                 .collect(Collectors.toList());
 
         fahrtListe.setAll(filteredDrives);
+        return fahrtListe;
     }
 
-    private void filterByCategory(String selectedCategory) {
+    public List<Drive> filterByCategory(String selectedCategory) {
         Predicate<Drive> filterPredicate = drive -> {
             String category = driveFacade.getCategoryNameByDriveId(drive.getDriveId());
             return selectedCategory.equals(category);
@@ -351,13 +356,14 @@ public class TableViewController{
                 .collect(Collectors.toList());
 
         fahrtListe.setAll(filteredDrives);
+        return fahrtListe;
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String headerText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
-        alert.showAndWait();
+        alert.show();
     }
 
 }
