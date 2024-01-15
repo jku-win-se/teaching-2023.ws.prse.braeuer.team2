@@ -36,4 +36,26 @@ Zusätzlich besteht noch die Möglichkeite eine wiederholende Fahrt anzulegen, h
 
 ![alt text](https://github.com/jku-win-se/teaching-2023.ws.prse.braeuer.team2/blob/main/docs/Screenshots/Screenshot8.JPG?raw=true)
 
+## Fahrtenbuch
+Im Fahrtenbuch gibt es verschieden Filteroption, wie Datum oder Kategorie. Hier kann man die gewünschten Daten auswählen und sich, dann die gefiltertedn Daten anzeigen lassen.
+
 ![alt text](https://github.com/jku-win-se/teaching-2023.ws.prse.braeuer.team2/blob/main/docs/Screenshots/Screenshot9.JPG?raw=true)
+
+### Fahrt bearbeiten und löschen
+Mit einem Doppelklick auf eine Fahrt im Fahrten buch lassen sich alle Eigenschaften von dieser nach belieben bearbeiten, zudem besteht auch noch dei Möglichkeit eine Fahrt gänzlich aus der Datenbank zu löschen.
+
+![alt text](https://github.com/jku-win-se/teaching-2023.ws.prse.braeuer.team2/blob/main/docs/Screenshots/Screenshot10.JPG?raw=true)
+
+## Import und Export
+In diesem Menüpunkt können, die Datenbank als csv Dateien sowohl lokal in den Projektordner gespeichert werden und ebenso mit Import darauas wieder eingespielt werden. Zusätzlich besteht die Möglichkeit die Dateien in eine Cloud zu exportieren, hier wird dann der entsprechende Link dazu ausgegeben.
+
+![alt text](https://github.com/jku-win-se/teaching-2023.ws.prse.braeuer.team2/blob/main/docs/Screenshots/Screenshot11.JPG?raw=true)
+
+## Übersicht
+In der Übersicht kann man sich die gefahrtenen Kilometer grafisch darstellen lassen. Hier besteht wieder die Möglichkeit nach verschiedenen Parametern zu filtern um das gewünschte Diagramm zu erhalten.
+
+![alt text](https://github.com/jku-win-se/teaching-2023.ws.prse.braeuer.team2/blob/main/docs/Screenshots/Screenshot13.JPG?raw=true)
+
+Ebenfalls gibt es noch eine tabellarische Anzeige, wobei die gefilterten Fahrten angeziegt werden und die Gesamtkilometer dieser Fahrten
+
+![alt text](https://github.com/jku-win-se/teaching-2023.ws.prse.braeuer.team2/blob/main/docs/Screenshots/Screenshot14.JPG?raw=true)
