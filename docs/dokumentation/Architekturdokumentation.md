@@ -87,3 +87,24 @@ Dieser Ansatz bietet mehrere praktische Vorteile:
 
 
 ## Code Qualität
+
+### PMD Integration
+
+PMD ist ein statisches Analysetool, das im Projekt-Workflow eingebunden ist, um Code-Qualitätsstandards zu gewährleisten. Es dient der frühzeitigen Erkennung von potenziellen Fehlern, schlechten Praktiken und Optimierungsmöglichkeiten im Code.
+
+- **Einrichtung**: In der GitHub Actions Workflow-Datei wird PMD als Schritt definiert. Die Checks der veränderten Dateien werden automatisch bei jedem Push- oder Pull-Request auf jeder Branch ausgeführt.
+- **Konfiguration**: PMD wird so konfiguriert, dass es die Java-Quelldateien im Verzeichnis `src/main/java` analysiert. Die Regeln für die Code-Analyse werden in einer zur Verfügung gestellten `ruleset.xml`-Datei definiert.
+- **Ausführung**: Bei der Ausführung scannt PMD den Code gemäß den festgelegten Regeln und identifiziert Code-Muster, die verbessert werden können, um die Code-Qualität zu erhöhen.
+
+### SonarQube Integration
+
+SonarQube ist ein fortschrittliches Tool zur statischen Code-Analyse, das in den Workflow integriert ist, um umfassende Code-Reviews zu ermöglichen. Es deckt ein breiteres Spektrum an Code-Qualitätsaspekten ab, einschließlich Bugs, Code-Smells, Sicherheitslücken und Testabdeckung.
+
+- **Einrichtung**: SonarQube wird als Schritt in der GitHub Actions Workflow-Datei eingebunden. Es ist konfiguriert, um bei jedem Push- oder Pull-Request auf den allen Branches ausgeführt zu werden.
+- **Build und Analyse**: Der Schritt `Build and analyze` führt Maven-Befehle aus, um das Projekt zu bauen und gleichzeitig eine SonarQube-Analyse durchzuführen. Hierfür werden sowohl das `GITHUB_TOKEN` als auch das `SONAR_TOKEN` verwendet.
+- **Häufige Bugs**: Ein häufig identifizierter Bug durch SonarQube ist das Fehlen eines `finally`-Blocks in `try-catch`-Konstrukten, was notwendig ist, um Ressourcen wie Datenquellen korrekt zu schließen und Ressourcenlecks zu vermeiden.
+
+### Wichtigkeit dieser Integrationen
+
+- **Frühzeitige Fehlererkennung**: Beide Tools helfen dabei, Fehler und potenzielle Probleme im Code zu identifizieren, bevor sie in die main branch gelangen.
+- **Automatisierte Code-Reviews**: Die Integration ermöglicht kontinuierliche und automatisierte Code-Reviews, die die Codequalität und die Effizienz des Entwicklungsprozesses verbessern.
