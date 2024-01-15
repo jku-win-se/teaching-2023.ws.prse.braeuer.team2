@@ -15,6 +15,10 @@ Recherche, Erstellung von Präsentation, Planung der Projketstruktur: ca. 7 Stun
 ### Präsenztermine ca. 9 Stunden
 Teinlnahme an Präsenzterminen: ca. 9 Stunden
 
+### Bugfixes ca. 5 Stunden
+Bugfixes: ca. 2,5 Stunden\
+Behebung von PMD Fehlern, etc: ca 2,5 Stunden
+
 ### Umsetzung von Anforderungen ca. 37 Stunden
 Umsetzung Backend und CRUD Operationen: ca. 6 Stunden\
 Fahrt erstellen: ca. 8 Stunden\
