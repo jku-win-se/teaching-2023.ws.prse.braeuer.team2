@@ -1,8 +1,30 @@
 # Anforderungsdokumentation
 
-## Elma Buljina
+## Elma Buljina ca. 104h
 
-# Projektfortschritt
+### Organisatorisches und Planung ca. 30 Stunden
+Meetings für Aufgabenverteilung, Erstellung und Planung von Issues, Recherche
+
+### Präsenztermine 
+Teilnahme an Präsenzterminen
+
+### Umsetzung von Anforderungen 
+Prototyp: 8,5h
+GUI:
+Page Neue Fahrt: 5h
+Page Zukünftige Fahrt: 4,5h
+Page Fahrtenbücher: 2h
+Page Übersicht/Diagramm: 2,5h
+Page Fahrtenbücher & Fahrten: 6,5h
+Kategoriefilter: 3h
+Tag/Monat/Jahr Filter: 5h
+Filtern nach Fahrtzeit: 4h
+Filtern nach Kilometer: 4,5h
+Filtern nach durch. Geschw.: 5h
+Änderungen Filter allgemein und Frontend: 6h
+Tabelle bearbeitet ( Spalten d. Geschw. + Datum) hinzugefügt: 4h 
+Analyse Graph (Übersicht Seite): 9,5
+Dokumentation (Einleitung, Testdoku, Klassendoku): 4h
 
 
 
