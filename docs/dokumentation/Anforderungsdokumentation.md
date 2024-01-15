@@ -2,7 +2,7 @@
 
 ## Elma Buljina ca. 104h
 
-### Organisatorisches und Planung ca. 30 Stunden
+### Organisatorisches und Planung
 Meetings für Aufgabenverteilung, Erstellung und Planung von Issues, Recherche
 
 ### Präsenztermine 
@@ -25,7 +25,6 @@ Filtern nach durch. Geschw.: 5h
 Tabelle bearbeitet ( Spalten d. Geschw. + Datum) hinzugefügt: 4h 
 Analyse Graph (Übersicht Seite): 9,5
 Dokumentation (Einleitung, Testdoku, Klassendoku): 4h
-
 
 
 
