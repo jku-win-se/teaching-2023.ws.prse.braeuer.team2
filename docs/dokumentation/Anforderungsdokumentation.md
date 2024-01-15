@@ -62,7 +62,7 @@ UML Tool Recherche, Java FX Recherche: ca. 8h
 Teilnahme an Präsenzterminen: ca. 9h
 
 ### Umsetzung von Anforderungen ca. 42h
-GUI (Mockup für Prototyp, Prototyperstellung in Figma, Einheitliches Frontend, Grundlegende Navigation zwischen den Ansichten, Datenpersistenz bei Navigation):ca. 17h\
+GUI (Mockup für Prototyp, Prototyperstellung in Figma, Einheitliches Frontend, Grundlegende Navigation zwischen den Ansichten, Datenpersistenz bei Navigation): ca. 17h\
 Anzeige der Daten in Fahrtenbucher:ca. 4h\
 Fahrt hinzufügen: ca. 1h\
 Fahrt löschen: ca. 1h\
@@ -73,7 +73,7 @@ Fahrzeug anlegen: ca. 2h\
 Kategorie anlegen: ca. 1h\
 Kategorie zuordnen: ca. 1h\
 Kategorie ändern und entfernen: ca. 3h\
-Tabellenansicht: ca. 6.5h\
+Tabellenansicht: ca. 6.5h
 
 ### Dokumentation ca. 10h
 Installationsbeschreibung, Anforderungsdokumentation, Testdokumentation: ca. 10h
