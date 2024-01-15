@@ -52,7 +52,31 @@ Teilnahme an Präsenzterminen.
 ### Dokumentationen
 API Dokumentation + Testdokumentation + Projektdokumentation
 
-## Aline Sageder
+## Aline Sageder ca. 90h
+
+### Organisatorisches und Planung ca. 29h
+Organisation von Besprechungen zur Verteilung von Aufgaben und Zusammenführung von Branches. Erstellung und Ausarbeitung von Aufgaben und Präsentationsvorbereitungen. ca. 21h
+UML Tool Recherche, Java FX Recherche: ca. 8h
+
+### Präsenztermine ca. 9 Stunden
+Teilnahme an Präsenzterminen: ca. 9h
+
+### Umsetzung von Anforderungen ca. 42h
+GUI (Mockup für Prototyp, Prototyperstellung in Figma, Einheitliches Frontend, Grundlegende Navigation zwischen den Ansichten, Datenpersistenz bei Navigation):ca. 17h
+Anzeige der Daten in Fahrtenbucher:ca. 4h
+Fahrt hinzufügen: ca. 1h
+Fahrt löschen: ca. 1h
+Fahrt bearbeiten (clickable): ca. 2h
+Zukünftige Fahrten erfassen: ca. 2h
+wiederholende Fahrt anlegen: ca. 2h
+Fahrzeug anlegen: ca. 2h
+Kategorie anlegen: ca. 1h
+Kategorie zuordnen: ca. 1h
+Kategorie ändern und entfernen: ca. 3h
+Tabellenansicht: ca. 6.5h
+
+### Dokumentation ca. 10h
+Installationsbeschreibung, Anforderungsdokumentation, Testdokumentation: ca. 10h
 
 ## Philipp Suchan ca. 87,5 Stunden
 
