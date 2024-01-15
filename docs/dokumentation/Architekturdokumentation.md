@@ -73,5 +73,17 @@ Die Projektstruktur ist so gestaltet, dass sie die Prinzipien des sauberen Desig
 4. **Import von CSV-Daten in die Datenbank (importDataFromCSV)**
    - Die Methode `importDataFromCSV` liest CSV-Dateien und importiert die Daten zurück in die Datenbank.
    - Nutzt Java I/O-Klassen zur Dateileseoperation und JDBC für Datenbankeinsätze.
+  
+### MySQL-Datenbank in der Cloud
+
+Die MySQL-Datenbank wurde auf einer Virtuellen Maschine auf DigitalOcean installiert und bringt einen entscheidenden Vorteil für die Bereitstellung und den Betrieb der Anwendung: Es entfällt die Notwendigkeit, eine Datenbank lokal zu installieren und zu konfigurieren. Diese zentrale Datenbanklösung ist die Voraussetzung zur Verteilung unserer JAR-Datei, die als finale Anwendungsabgabe dient. Benutzer der Anwendung müssen keine lokale Datenbanksetup durchführen, was die Installation und Inbetriebnahme deutlich vereinfacht.
+
+Dieser Ansatz bietet mehrere praktische Vorteile:
+
+1. **Einfachere Konfiguration und Deployment**: Da die Datenbank bereits in der Cloud gehostet wird, können Entwickler und Benutzer die Anwendung direkt starten, ohne sich um die Datenbankinstallation kümmern zu müssen. Dies reduziert die Komplexität und mögliche Fehlerquellen bei der Einrichtung.
+2. **Geringere lokale Ressourcenanforderungen**: Da die Datenbank auf einer VM bei DigitalOcean läuft, werden lokale Ressourcen wie Speicherplatz und Rechenkapazität geschont.
+3. **Zentralisierte Datenverwaltung**: Alle Daten werden zentral verwaltet und (Test-)Daten müssen nicht je Client manuell auf einem Rechner gespeichert werden.
+
+
 
 ## Code Qualität
