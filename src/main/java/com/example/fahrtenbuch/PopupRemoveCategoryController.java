@@ -1,5 +1,6 @@
 package com.example.fahrtenbuch;
 
+import com.example.fahrtenbuch.business.CategoryFacade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -24,5 +25,10 @@ public class PopupRemoveCategoryController {
     }
 
     public void removeCategory(ActionEvent event) {
+        CategoryFacade categoryFacade = new CategoryFacade();
+        categoryFacade.deleteCategoryByName(selectedCategoryName);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 }

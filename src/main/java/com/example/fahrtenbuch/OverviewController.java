@@ -137,9 +137,7 @@ public class OverviewController implements Initializable{
 
     @FXML
     private void handleFahrtenbucherPage(ActionEvent event) throws IOException {
-        Drive drive = new Drive(1, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now()), Time.valueOf(LocalTime.now()), 3, 3.0);
-        List<Drive> drives = this.driveFacade.getAllDrives();
-        drives.add(drive);
+
         this.fahrtListe = FXCollections.observableArrayList(this.driveFacade.getAllDrives());
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("FahrtenbucherPage.fxml"));
         Parent overviewPage = (Parent)loader.load();
@@ -166,7 +164,11 @@ public class OverviewController implements Initializable{
         Integer day = parseTextFieldToInt(tagTextField.getText());
         String category = kategoryTF.getValue();
 
-        if (year != null) {
+        if (year == null) {
+
+            showAlert(Alert.AlertType.ERROR,"Fehler","Es muss ein Jahr eingegeben werden.");
+            return;
+        }else{
             queryBuilder.append(" AND YEAR(drive_date) = ").append(year);
         }
 
@@ -283,6 +285,7 @@ public class OverviewController implements Initializable{
         updateCheart(Year.now().getValue());
     }
 
+
     public void showTableView(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("TableView.fxml"));
         Parent root = (Parent)loader.load();
@@ -291,4 +294,13 @@ public class OverviewController implements Initializable{
         stage.setScene(scene);
         stage.show();
     }
+  
+    private void showAlert(Alert.AlertType alertType, String title, String headerText) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
+    }
+
+
 }

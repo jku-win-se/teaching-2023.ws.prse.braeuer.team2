@@ -77,6 +77,7 @@ public class IndexController{
 
         driveFacade = new DriveFacade();
         categoryFacade = new CategoryFacade();
+
     }
 
     @FXML
@@ -89,7 +90,6 @@ public class IndexController{
         CategoryFacade categoryFacade = new CategoryFacade();
         ObservableList<Category> categories = FXCollections.observableArrayList(categoryFacade.getAllCategories());
 
-        // Konvertiere ObservableList<Category> in ObservableList<String>
         ObservableList<String> categoryNames = FXCollections.observableArrayList();
         for (Category category : categories) {
             categoryNames.add(category.toString());
@@ -100,9 +100,6 @@ public class IndexController{
 
     @FXML
     private void handleFahrtenbucherPage(ActionEvent event) throws IOException {
-        Drive drive = new Drive(1, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now()),Time.valueOf(LocalTime.now()), 3, 3.0);
-        drives = driveFacade.getAllDrives();
-        drives.add(drive);
 
         fahrtListe = FXCollections.observableArrayList(driveFacade.getAllDrives());
 
@@ -264,6 +261,8 @@ public class IndexController{
             categoryDriveFacade.persistCategoryDrive(categoryDrive);
         }
 
+        driveFacade.updateOdometerIfCompleted(driveFacade.getLastDriveId());
+
         handleBtnCreateRide(event);
 
     }
@@ -274,7 +273,6 @@ public class IndexController{
         CategoryFacade categoryFacade = new CategoryFacade();
         ObservableList<Category> categories = FXCollections.observableArrayList(categoryFacade.getAllCategories());
 
-        // Konvertiere ObservableList<Category> in ObservableList<String>
         ObservableList<String> categoryNames = FXCollections.observableArrayList();
         for (Category category : categories) {
             categoryNames.add(category.toString());
@@ -293,6 +291,8 @@ public class IndexController{
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(root));
+
+        popupStage.setOnHidden(e -> initializeCategoryDropdown());
 
         popupStage.show();
 
@@ -327,7 +327,7 @@ public class IndexController{
             return Time.valueOf(timeString);
         } catch (IllegalArgumentException e) {
             showAlert(Alert.AlertType.ERROR, "Fehler", "Ungültiges Zeitformat. Verwenden Sie das Format 'hh:mm:ss'.");
-            throw e; // Re-throw the exception to stop further processing
+            throw e;
         }
     }
 
@@ -347,6 +347,8 @@ public class IndexController{
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(root));
+
+        popupStage.setOnHidden(e -> initializeCategoryDropdown());
 
         popupStage.show();
 
@@ -371,6 +373,8 @@ public class IndexController{
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(new Scene(root));
+
+        popupStage.setOnHidden(e -> initializeCategoryDropdown());
 
         popupStage.show();
 

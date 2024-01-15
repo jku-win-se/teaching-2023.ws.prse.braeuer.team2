@@ -156,10 +156,6 @@ public class DriveFacade {
         }
     }
 
-//    public static void main(String args[]) {
-//    	DriveFacade db = new DriveFacade();
-//    	db.deleteDriveById(43);
-//    }
 
     public Integer getLastDriveId() {
         Integer lastDriveId = null;
@@ -181,30 +177,25 @@ public class DriveFacade {
 
 
 
-    /*
-     *
-     * new method's
-     * need for filter page
-     *
-     * */
+    public String getLicensePlateByDriveId(int driveId) {
+        String query = "SELECT d.drive_id, v.license_plate " +
+                "FROM drive d " +
+                "JOIN vehicle v ON d.vehicle_id = v.vehicle_id " +
+                "WHERE d.drive_id = ?";
 
-    public String getLicensePlateByDriveId(int dID) {
-        String query = "SELECT * FROM `vehicle` WHERE vehicle_id=?";
-        String str="";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-            preparedStatement.setInt(1, dID);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, driveId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-                    str = resultSet.getString("license_plate");
-                    //System.out.println("license plate"+str);
-                }
+            if (resultSet.next()) {
+                return resultSet.getString("license_plate");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return str;
+        return null;
     }
 
     public String getCategoryNameByDriveId(int driveId) {
@@ -327,13 +318,6 @@ public class DriveFacade {
     }
 
 
-    /*
-     *
-     * second term edition & add some method
-     *
-     */
-
-
     public double getAverageSpeedByDriveId(int driveId) throws SQLException {
         double averageSpeed = 0.0;
         long timeDiffSeconds = 0;
@@ -373,10 +357,66 @@ public class DriveFacade {
         return timeDiffSeconds;
     }
 
+    public void updateDrive(int driveId, Drive updatedDrive) {
+        String query = "UPDATE drive " +
+                "SET vehicle_id = ?, " +
+                "    drive_date = ?, " +
+                "    departure_time = ?, " +
+                "    arrival_time = ?, " +
+                "    waiting_time = ?, " +
+                "    driven_kilometres = ?, " +
+                "    status = ? " +
+                "WHERE drive_id = ?";
 
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, updatedDrive.getVehicleId());
+            preparedStatement.setDate(2, updatedDrive.getDate());
+            preparedStatement.setTime(3, updatedDrive.getDepartureTime());
+            preparedStatement.setTime(4, updatedDrive.getArrivalTime());
+            preparedStatement.setInt(5, updatedDrive.getWaitingTime());
+            preparedStatement.setDouble(6, updatedDrive.getDrivenKilometres());
+            preparedStatement.setString(7, updatedDrive.getStatus().toString());
+            preparedStatement.setInt(8, driveId);
 
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void updateOdometerIfCompleted(int driveId) {
+        String query = "SELECT status, driven_kilometres, vehicle_id FROM drive WHERE drive_id = ?";
 
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.setInt(1, driveId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
+            if (resultSet.next()) {
+                String status = resultSet.getString("status");
+                double drivenKilometres = resultSet.getDouble("driven_kilometres");
+                int vehicleId = resultSet.getInt("vehicle_id");
+
+                if ("ABGESCHLOSSEN".equals(status)) {
+                    updateVehicleOdometer(vehicleId, drivenKilometres);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateVehicleOdometer(int vehicleId, double drivenKilometres) {
+        String updateQuery = "UPDATE vehicle SET odometer = odometer + ? WHERE vehicle_id = ?";
+
+        try (PreparedStatement updateStatement = conn.prepareStatement(updateQuery)) {
+            updateStatement.setDouble(1, drivenKilometres);
+            updateStatement.setInt(2, vehicleId);
+
+            updateStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

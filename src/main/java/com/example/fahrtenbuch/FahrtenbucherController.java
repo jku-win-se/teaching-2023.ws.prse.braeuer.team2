@@ -110,7 +110,7 @@ public class FahrtenbucherController implements Initializable{
 
         kfzColumn.setCellValueFactory(cellData -> {
 
-            int vid = cellData.getValue().getVehicleId();
+            int vid = cellData.getValue().getDriveId();
             String lp = driveFacade.getLicensePlateByDriveId(vid);
             return new SimpleStringProperty(""+lp);
         });
@@ -311,7 +311,7 @@ public class FahrtenbucherController implements Initializable{
 
     @FXML
     void completeTFActionBtn(ActionEvent event) {
-        handleStatusFilter("COMPLETED");
+        handleStatusFilter("ABGESCHLOSSEN");
     }
 
 

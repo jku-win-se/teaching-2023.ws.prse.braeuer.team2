@@ -31,6 +31,8 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
 
+
+
         return conn;
     }
 
@@ -72,8 +74,8 @@ public class DatabaseConnection {
                 "    category_id INT,\n" +
                 "    drive_id INT,\n" +
                 "    PRIMARY KEY (category_id, drive_id),\n" +
-                "    FOREIGN KEY (category_id) REFERENCES category(category_id),\n" +
-                "    FOREIGN KEY (drive_id) REFERENCES drive(drive_id)\n" +
+                "    FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE CASCADE ,\n" +
+                "    FOREIGN KEY (drive_id) REFERENCES drive(drive_id) ON DELETE CASCADE\n" +
                 ");";
 
         try {
@@ -89,7 +91,7 @@ public class DatabaseConnection {
             statement.executeUpdate(createCategory);
             statement.executeUpdate(createCategoryDrive);
 
-            VehicleFacade vehicleFacade = new VehicleFacade();
+            /*VehicleFacade vehicleFacade = new VehicleFacade();
             vehicleFacade.persistVehicle(new Vehicle("testlicense", 123456.0));
             vehicleFacade.persistVehicle(new Vehicle("secondlicense", 100.0));
             //vehicleFacade.deleteVehicleById(2);

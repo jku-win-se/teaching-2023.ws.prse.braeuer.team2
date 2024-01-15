@@ -4,10 +4,9 @@
 //
 
 package com.example.fahrtenbuch;
+import com.example.fahrtenbuch.business.*;
 import com.example.fahrtenbuch.entities.*;
 
-import com.example.fahrtenbuch.business.DatabaseConnection;
-import com.example.fahrtenbuch.business.DriveFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -27,6 +27,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EditDriveController {
@@ -36,7 +37,9 @@ public class EditDriveController {
     private Alert alert;
     private Drive selectedDrive;
     @FXML
-    private TextField AbfahrtTF;
+    private TextField datumTF;
+    @FXML
+    private TextField abfahrtTF;
     @FXML
     private TextField ankunftTF;
     @FXML
@@ -45,6 +48,28 @@ public class EditDriveController {
     private TextField aktiveFahTF;
     @FXML
     private TextField kfzTF;
+
+    @FXML
+    public ComboBox<String> kategoriesTF;
+
+    @FXML
+    public void initialize() {
+        initializeCategoryDropdown();
+    }
+
+
+    private void initializeCategoryDropdown() {
+        CategoryFacade categoryFacade = new CategoryFacade();
+        ObservableList<Category> categories = FXCollections.observableArrayList(categoryFacade.getAllCategories());
+
+        ObservableList<String> categoryNames = FXCollections.observableArrayList();
+        for (Category category : categories) {
+            categoryNames.add(category.toString());
+        }
+
+        kategoriesTF.setItems(categoryNames);
+    }
+
 
     public EditDriveController() {
         this.databaseConnection.getConnection();
@@ -89,9 +114,7 @@ public class EditDriveController {
 
     @FXML
     private void handleFahrtenbucherPage(ActionEvent event) throws IOException {
-        Drive drive = new Drive(1, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now()), Time.valueOf(LocalTime.now()), 3, 3.0);
-        List<Drive> drives = this.driveFacade.getAllDrives();
-        drives.add(drive);
+
         this.fahrtListe = FXCollections.observableArrayList(this.driveFacade.getAllDrives());
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("FahrtenbucherPage.fxml"));
         Parent overviewPage = (Parent)loader.load();
@@ -120,16 +143,129 @@ public class EditDriveController {
 
     private void updateFields() {
         if (this.selectedDrive != null) {
+            DriveFacade driveFacade = new DriveFacade();
+
+            Date date = this.selectedDrive.getDate();
             Time departureTime = this.selectedDrive.getDepartureTime();
             Time arrivalTime = this.selectedDrive.getArrivalTime();
             Double drivenKilometres = this.selectedDrive.getDrivenKilometres();
             Integer waitingTime = this.selectedDrive.getWaitingTime();
-            this.AbfahrtTF.setText(departureTime != null ? departureTime.toString() : "");
+            String currentCategory = driveFacade.getCategoryNameByDriveId(this.selectedDrive.getDriveId());
+            this.kfzTF.setText(driveFacade.getLicensePlateByDriveId(this.selectedDrive.getDriveId()));
+            this.abfahrtTF.setText(departureTime != null ? departureTime.toString() : "");
             this.ankunftTF.setText(arrivalTime != null ? arrivalTime.toString() : "");
             this.gefahreneKmTF.setText(drivenKilometres != null ? drivenKilometres.toString() : "");
             this.aktiveFahTF.setText(waitingTime != null ? waitingTime.toString() : "");
+            this.datumTF.setText(date != null ? date.toString() : "");
+            this.kategoriesTF.setValue(currentCategory);
+        }
+    }
+
+    @FXML
+    private void deleteRide(ActionEvent event) throws IOException {
+
+        DriveFacade driveFacade = new DriveFacade();
+        driveFacade.deleteDriveById(this.selectedDrive.getDriveId());
+        handleFahrtenbucherPage(event);
+    }
+
+
+    @FXML
+    private void saveChanges(ActionEvent event) throws IOException {
+
+        if (kfzTF.getText().isEmpty() || datumTF.getText().isEmpty()) {
+
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Bitte füllen Sie Fahrzeug und Datum aus.");
+            return;
         }
 
+        VehicleFacade vehicleFacade = new VehicleFacade();
+        Vehicle vehicle = vehicleFacade.getVehicleByLicensePlate(kfzTF.getText());
+        if (vehicle == null) {
 
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Fahrzeug mit Kennzeichen " + kfzTF.getText() + " nicht gefunden.");
+            return;
+        }
+        Integer vehicleId = vehicleFacade.getVehicleIdByLicensePlate(kfzTF.getText());
+
+        Drive drive;
+
+        if (!abfahrtTF.getText().isEmpty() && !ankunftTF.getText().isEmpty() && !gefahreneKmTF.getText().isEmpty() && !aktiveFahTF.getText().isEmpty()) {
+
+            drive = new Drive(
+                    vehicleId,
+                    Date.valueOf(datumTF.getText()),
+                    Time.valueOf(validateAndParseTime(abfahrtTF.getText()).toLocalTime()),
+                    Time.valueOf(validateAndParseTime(ankunftTF.getText()).toLocalTime()),
+                    Integer.parseInt(aktiveFahTF.getText()),
+                    Double.parseDouble(gefahreneKmTF.getText())
+            );
+        } else if (!abfahrtTF.getText().isEmpty()) {
+
+            drive = new Drive(
+                    vehicleId,
+                    Date.valueOf(datumTF.getText()),
+                    Time.valueOf(validateAndParseTime(abfahrtTF.getText()).toLocalTime())
+
+            );
+        } else if (!datumTF.getText().isEmpty()) {
+            drive = new Drive(
+                    vehicleId,
+                    Date.valueOf(datumTF.getText())
+            );
+        } else {
+
+            String datumText = datumTF.getText();
+            if (datumText.isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Fehler", "Bitte geben Sie ein Datum ein.");
+                return;
+            }
+
+            try {
+                Date.valueOf(datumText);
+            } catch (IllegalArgumentException e) {
+                showAlert(Alert.AlertType.ERROR, "Fehler", "Ungültiges Datumsformat. Verwenden Sie das Format 'yyyy-MM-dd'.");
+                return;
+            }
+
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Bitte füllen Sie die erforderlichen Felder aus.");
+            return;
+        }
+
+        driveFacade.updateDrive(selectedDrive.getDriveId(), drive);
+
+        CategoryFacade categoryFacade = new CategoryFacade();
+
+        Category selectedCategory = categoryFacade.getCategoryByName(kategoriesTF.getValue());
+
+        if (selectedCategory != null) {
+            CategoryDriveFacade categoryDriveFacade = new CategoryDriveFacade();
+            categoryDriveFacade.changeCategoryByDriveID(selectedDrive.getDriveId(), selectedCategory.getCategoryId());
+        }
+
+        if(this.selectedDrive.getStatus().toString()!="ABGESCHLOSSEN"){
+            driveFacade.updateOdometerIfCompleted(selectedDrive.getDriveId());
+        }
+
+        handleFahrtenbucherPage(event);
+
+
+    }
+
+    private Time validateAndParseTime(String timeString) {
+        try {
+            return Time.valueOf(timeString);
+        } catch (IllegalArgumentException e) {
+            showAlert(Alert.AlertType.ERROR, "Fehler", "Ungültiges Zeitformat. Verwenden Sie das Format 'hh:mm:ss'.");
+            throw e;
+        }
+    }
+
+
+    private void showAlert(Alert.AlertType alertType, String title, String headerText) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
     }
 }
