@@ -5,70 +5,50 @@
 # Projektfortschritt
 
 ## Prototyp
-
 - Gesamtzeit: 8,5 Stunden
 
 ## GUI
 
-
   ### Recherche
-
   - Zeit: 4,3 Stunden
 
   ### Neue Fahrt Seite
-
   - Zeit: 5 Stunden
 
   ### Zukünftige Fahrt Seite
-
   - Zeit: 4,5 Stunden
 
-  ### Übersicht Seite
-
-  - Zeit: 2 Stunden
-
   ### Übersicht/Diagramm Seite
-
-  - Zeit: 2,5 Stunden
+  - Zeit: 4,5 Stunden
 
   ### Fahrtenbücher & Fahrten Seite
-
   - Zeit: 6,5 Stunden
 
   ### Kategoriefilter
-
   - Zeit: 3 Stunden
 
   ### Tag/Monat/Jahr Filter
-
   - Zeit: 5 Stunden
 
   ### Filtern nach Fahrtzeit
-
   - Zeit: 4 Stunden
 
   ### Filtern nach Kilometer
-
   - Zeit: 4,5 Stunden
 
   ### Filtern nach durchschnittlicher Geschwindigkeit
-
   - Zeit: 5 Stunden
 
   ### Änderungen Filter allgemein und Frontend
-
   - Zeit: 6 Stunden
 
   ### Tabelle bearbeitet (Spalten der Geschwindigkeit + Datum hinzugefügt)
-
   - Zeit: 4 Stunden
 
   ### Analyse Graph (Übersicht Seite)
-
   - Zeit: 9,5 Stunden
 
   ### Dokumentation (Einleitung, Testdokumentation, Klassendokumentation)
-
   - Zeit: 3 Stunden
 
 ## Gesamter Stand
