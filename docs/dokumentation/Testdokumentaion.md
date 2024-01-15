@@ -114,3 +114,88 @@ Die Testklasse `DriveFacadeTest` enthält Tests für die Methoden der `DriveFaca
 - Aufruf der Methode `getAverageSpeedByDriveId()` mit einer bekannten Fahrt-ID (z.B., 1).
 
 **Erwartetes Ergebnis:** Die Methode gibt die erwartete durchschnittliche Geschwindigkeit zurück.
+
+## Überischt
+Die Testklasse TableViewControllerTest enthält Tests für die Methoden der Klasse TableViewController, die die das Filtern nach Jahr, Monat und/oder Kategorie ermöglicht und die Einträge mit den jeweiligen gesamt gefahrenen km tabellarisch ausgibt.
+
+## Umgebung
+- Sprache: Java
+- Framework: JUnit
+- Datenbank: MySQL
+
+## Testfälle
+
+### 'testFilterByYear()'
+**Beschreibung:** Überprüft die Filterung von Fahrten nach einem bestimmten Jahr.
+
+**Schritte:**
+-Ruft 'filterByYear()' mit dem ausgewählten Jahr auf.
+
+**Erwartetes Ergebnis:** Nur die Fahrten des ausgewählten Jahres sind in der Liste enthalten.
+
+
+### 'testFilterByYearNoMatch()'
+**Beschreibung:** Überprüft die Filterung, wenn keine Fahrten im ausgewählten Jahr vorhanden sind.
+
+**Schritte:**
+-Ruft 'filterByMonth()' mit dem ausgewählten Monat auf.
+
+**Erwartetes Ergebnis:** Die gefilterte Liste ist leer.
+  
+
+### 'testFilterByMonth()'
+**Beschreibung:** Überprüft die Filterung von Fahrten nach Monat.
+
+**Schritte:**
+-Ruft 'filterByMonth()' mit dem ausgewählten Monat auf.
+  
+**Erwartetes Ergebnis:** Nur die Fahrten des ausgewählten Jahres sind in der Liste enthalten.
+
+
+### 'testFilterByMonthNoMatch()'
+**Beschreibung:** Überprüft die Filterung, wenn keine Fahrten im ausgewählten Monat vorhanden sind.
+
+**Schritte:**
+-Ruft 'filterByMonth()' mit einem Monat auf, für den keine Fahrten vorhanden sind.
+  
+**Erwartetes Ergebnis:** Die gefilterte Liste ist leer.
+
+
+### 'testFilterByYearAndMonth()'
+**Beschreibung:** Überprüft die Filterung von Fahrten nach Jahr und Monat.
+
+**Schritte:**
+-Ruft 'filterByYearAndMonth()' mit dem ausgewählten Jahr und Monat auf.
+  
+**Erwartetes Ergebnis:** Nur die Fahrten des ausgewählten Jahres und Monats sind in der Liste enthalten.
+
+
+### 'testFilterByYearAndMonthNoMatch()'
+**Beschreibung:** Überprüft die Filterung, wenn keine Fahrten im ausgewählten Jahr und Monat vorhanden sind.
+
+**Schritte:**
+-Ruft 'filterByYearAndMonth()' mit einem Jahr und Monat auf, für die keine Fahrten vorhanden sind.
+  
+**Erwartetes Ergebnis:** Nur die Fahrten des ausgewählten Jahres und Monats sind in der Liste enthalten.
+
+
+### 'testFilterByCategory()'
+**Beschreibung:** Überprüft die Filterung von Fahrten nach Kategorie.
+
+**Schritte:**
+-Ruft 'filterByCategory()' mit der ausgewählten Kategorie auf.
+  
+**Erwartetes Ergebnis:** Nur die Fahrten mit der ausgewählten Kategorie sind in der Liste enthalten.
+
+
+### 'testFilterByCategoryNoMatch()'
+**Beschreibung:** Überprüft die Filterung, wenn keine Fahrten in der ausgewählten Kategorie vorhanden sind.
+
+**Schritte:**
+-Ruft 'filterByCategory()' mit einer Kategorie auf, für die keine Fahrten vorhanden sind.
+  
+**Erwartetes Ergebnis:** Die gefilterte Liste ist leer.
+
+## Ausführung
+Die Tests wurden mittels JUnit auf einer lokal eingerichteten Entwicklungsumgebung ausgeführt und erfolgreich validiert.
+
