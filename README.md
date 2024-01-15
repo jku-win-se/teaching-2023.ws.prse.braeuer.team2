@@ -17,10 +17,6 @@ JavaFX SDK; JDBC Connector; lokaler MySQL Server
 ### Installation
 Unter Project Structure -> Libraries JAVAFX SDK hinzufügen und unter Project Structure -> Modules -> Dependencies -> Add jar den Mysql JDBC Connector hinzufügen. Anschließend kann das Programm mit der Main Klasse "LogbookApplication" im "fahrtenbuch" package mit Klick auf die Schaltfläche "Run" ausgeführt werden.
 
-### Code Quality
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=prse-team2_fahrtenbuecher)
-Sonarcube Testergebnis 6.12:
-<img width="1100" alt="image" src="https://github.com/jku-win-se/teaching-2023.ws.prse.braeuer.team2/assets/32127275/2fc6adc5-0ad7-417e-a57b-b80307a2bc24">
 
 # Testdokumentation für die Klasse DriveFacadeTest
 
