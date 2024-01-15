@@ -58,4 +58,20 @@ Die Dateistruktur spiegelt die Paketstruktur wider. Jede Klasse befindet sich in
 
 Die Projektstruktur ist so gestaltet, dass sie die Prinzipien des sauberen Designs und der einfachen Wartbarkeit unterstützt. Die klare Trennung von Zuständigkeiten zwischen den verschiedenen Klassen und Paketen ermöglicht es, Änderungen effizient durchzuführen und die Erweiterbarkeit der Anwendung zu gewährleisten.
 
+### Implementierung Import/Export/Cloud-Export
+
+1. **Datenbankverbindung (DatabaseConnection)**
+   - Die Klasse `DatabaseConnection` im Paket `com.example.fahrtenbuch.business` ist zentral für die Verbindung zur MySQL-Datenbank.
+   - Verwendet JDBC (`java.sql.*`) für Datenbankoperationen.
+2. **Export von Daten in CSV-Dateien (exportDataToCSV)**
+   - Die Methode `exportDataToCSV` exportiert Daten aus den Tabellen (z.B. `vehicle`, `category`, `drive`, `category_drive`) in separate CSV-Dateien.
+   - Verwendet Java I/O-Klassen (`java.io.*`) zur Dateihandhabung.
+3. **Cloud-Export-Funktion (exportDataToCloud)**
+   - `exportDataToCloud` lädt die CSV-Dateien in die Cloud hoch und gibt Links zu diesen Dateien zurück.
+   - Nutzt den `ProcessBuilder` für den Datei-Upload mittels Curl, wobei auf den Dienst file.io zugegriffen wird.
+   - Verarbeitet die HTTP-Antwort mit `org.json.JSONObject` zur Extraktion des Links aus dem response.
+4. **Import von CSV-Daten in die Datenbank (importDataFromCSV)**
+   - Die Methode `importDataFromCSV` liest CSV-Dateien und importiert die Daten zurück in die Datenbank.
+   - Nutzt Java I/O-Klassen zur Dateileseoperation und JDBC für Datenbankeinsätze.
+
 ## Code Qualität
