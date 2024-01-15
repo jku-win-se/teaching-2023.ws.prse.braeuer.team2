@@ -125,7 +125,7 @@ Die Testklasse TableViewControllerTest enthält Tests für die Methoden der Klas
 
 ## Testfälle
 
-### 'testFilterByYear()'
+### `testFilterByYear()`
 **Beschreibung:** Überprüft die Filterung von Fahrten nach einem bestimmten Jahr.
 
 **Schritte:**
@@ -134,7 +134,7 @@ Die Testklasse TableViewControllerTest enthält Tests für die Methoden der Klas
 **Erwartetes Ergebnis:** Nur die Fahrten des ausgewählten Jahres sind in der Liste enthalten.
 
 
-### 'testFilterByYearNoMatch()'
+### `testFilterByYearNoMatch()`
 **Beschreibung:** Überprüft die Filterung, wenn keine Fahrten im ausgewählten Jahr vorhanden sind.
 
 **Schritte:**
@@ -143,7 +143,7 @@ Die Testklasse TableViewControllerTest enthält Tests für die Methoden der Klas
 **Erwartetes Ergebnis:** Die gefilterte Liste ist leer.
   
 
-### 'testFilterByMonth()'
+### `testFilterByMonth()`
 **Beschreibung:** Überprüft die Filterung von Fahrten nach Monat.
 
 **Schritte:**
@@ -152,7 +152,7 @@ Die Testklasse TableViewControllerTest enthält Tests für die Methoden der Klas
 **Erwartetes Ergebnis:** Nur die Fahrten des ausgewählten Jahres sind in der Liste enthalten.
 
 
-### 'testFilterByMonthNoMatch()'
+### `testFilterByMonthNoMatch()`
 **Beschreibung:** Überprüft die Filterung, wenn keine Fahrten im ausgewählten Monat vorhanden sind.
 
 **Schritte:**
@@ -161,7 +161,7 @@ Die Testklasse TableViewControllerTest enthält Tests für die Methoden der Klas
 **Erwartetes Ergebnis:** Die gefilterte Liste ist leer.
 
 
-### 'testFilterByYearAndMonth()'
+### `testFilterByYearAndMonth()`
 **Beschreibung:** Überprüft die Filterung von Fahrten nach Jahr und Monat.
 
 **Schritte:**
@@ -170,7 +170,7 @@ Die Testklasse TableViewControllerTest enthält Tests für die Methoden der Klas
 **Erwartetes Ergebnis:** Nur die Fahrten des ausgewählten Jahres und Monats sind in der Liste enthalten.
 
 
-### 'testFilterByYearAndMonthNoMatch()'
+### `testFilterByYearAndMonthNoMatch()`
 **Beschreibung:** Überprüft die Filterung, wenn keine Fahrten im ausgewählten Jahr und Monat vorhanden sind.
 
 **Schritte:**
@@ -179,7 +179,7 @@ Die Testklasse TableViewControllerTest enthält Tests für die Methoden der Klas
 **Erwartetes Ergebnis:** Nur die Fahrten des ausgewählten Jahres und Monats sind in der Liste enthalten.
 
 
-### 'testFilterByCategory()'
+### `testFilterByCategory()`
 **Beschreibung:** Überprüft die Filterung von Fahrten nach Kategorie.
 
 **Schritte:**
@@ -188,7 +188,7 @@ Die Testklasse TableViewControllerTest enthält Tests für die Methoden der Klas
 **Erwartetes Ergebnis:** Nur die Fahrten mit der ausgewählten Kategorie sind in der Liste enthalten.
 
 
-### 'testFilterByCategoryNoMatch()'
+### `testFilterByCategoryNoMatch()`
 **Beschreibung:** Überprüft die Filterung, wenn keine Fahrten in der ausgewählten Kategorie vorhanden sind.
 
 **Schritte:**
