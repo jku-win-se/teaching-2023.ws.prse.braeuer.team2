@@ -8,7 +8,28 @@
 
 
 
-## Max Oberaigner
+## Max Oberaigner 90,5h
+
+### Organisatorisches und Planung
+Durchführung von Meetings zur Aufgabenverteilung und Zusammenführung von Branches.
+Erstellung und Planung von Issues.
+
+### Präsenztermine
+Teilnahme an Präsenzterminen.
+
+### Umsetzung von Anforderungen (Nummerierung lt. Angabe)
+1 Basisfunktion: UML Modellierung + Datenbank Setup + CRUD Operationen mit JDBC
+2 Verwalten und Anzeige von Fahrten: Datenbank-Methoden
+3 Basisfunktion: Datenbank-Methoden
+4 Basisfunktion: Datenbank-Methoden
+6 Basisfunktion: Datenbank-Modellierung
+7 Verwalten und Anzeige von Fahrten: Datenbank-Methoden
+8 Backup: Implementierung Datenexport als CSV
+16 Backup: Implementierung Datenimport aus CSV
+17 Backup: Implementierung Cloud Backup
+
+### Dokumentationen
+API Dokumentation + Testdokumentation + Projektdokumentation
 
 ## Aline Sageder
 
