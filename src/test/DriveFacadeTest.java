@@ -1,5 +1,9 @@
 package com.example.fahrtenbuch;
 
+import com.example.fahrtenbuch.business.DatabaseConnection;
+import com.example.fahrtenbuch.business.DriveFacade;
+import com.example.fahrtenbuch.entities.Drive;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
