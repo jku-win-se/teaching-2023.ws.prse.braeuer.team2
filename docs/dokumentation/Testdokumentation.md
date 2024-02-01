@@ -98,15 +98,6 @@ Die Testklasse `DriveFacadeTest` enthält Tests für die Methoden der `DriveFaca
 
 **Erwartetes Ergebnis:** Die Methode gibt eine nicht leere Liste von Drive-Objekten zurück.
 
-### `testPersistRecurringDrive()`
-**Beschreibung:** Dieser Test prüft, ob die Methode `persistRecurringDrive()` wiederkehrende Fahrten erfolgreich in die Datenbank einfügt.
-
-**Schritte:**
-- Aufruf der Methode `persistRecurringDrive()` mit den erforderlichen Parametern.
-- Überprüfung, ob die wiederkehrenden Fahrten in der Datenbank vorhanden sind.
-
-**Erwartetes Ergebnis:** Die Methode fügt die wiederkehrenden Fahrten erfolgreich in die Datenbank ein.
-
 ### `testGetAverageSpeedByDriveId()`
 **Beschreibung:** Dieser Test prüft, ob die Methode `getAverageSpeedByDriveId()` die erwartete durchschnittliche Geschwindigkeit für eine Fahrt zurückgibt.
 
