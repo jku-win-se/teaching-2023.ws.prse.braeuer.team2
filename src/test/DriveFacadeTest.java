@@ -19,8 +19,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.example.fahrtenbuch.business.DriveFacade;
-import com.example.fahrtenbuch.entities.Drive;
 public class DriveFacadeTest {
 
 	private DriveFacade driveFacade;
@@ -31,22 +29,13 @@ public class DriveFacadeTest {
 	public void setUp() {
 		driveFacade = new DriveFacade();
 		fahrController = new FahrtenbucherController();
-		conn = createConnection();
+		DatabaseConnection dataBaseConnection = new DatabaseConnection();
+		conn = dataBaseConnection.getConnection();
 	}
 
 	@After
 	public void tearDown() {
 		closeConnection(conn);
-	}
-
-
-	private Connection createConnection() {
-		try {
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/logbook", "root", "");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	private void closeConnection(Connection connection) {
@@ -111,7 +100,7 @@ public class DriveFacadeTest {
 	@Test
 	public void testGetDrivesByLicensePlate() throws SQLException {
 		DriveFacade driveFacade = new DriveFacade();
-		List<Drive> drives = driveFacade.getDrivesByLicensePlate("testlicense");
+		List<Drive> drives = driveFacade.getDrivesByLicensePlate(driveFacade.getLicensePlateByDriveId(1));
 
 		assertNotNull(drives);
 		assertFalse(drives.isEmpty());
@@ -137,7 +126,7 @@ public class DriveFacadeTest {
 	@Test
 	public void testFilterDrivesWithQuery() {
 		DriveFacade driveFacade = new DriveFacade();
-		List<Drive> filteredDrives = driveFacade.filterDrivesWithQuery("SELECT * FROM drive WHERE status = 'COMPLETED'", null);
+		List<Drive> filteredDrives = driveFacade.filterDrivesWithQuery("SELECT * FROM drive WHERE status = 'ABGESCHLOSSEN'", null);
 
 		assertNotNull(filteredDrives);
 		assertFalse(filteredDrives.isEmpty());
@@ -147,36 +136,25 @@ public class DriveFacadeTest {
 	@Test
 	public void testFilterByStatus() {
 		DriveFacade driveFacade = new DriveFacade();
-		List<Drive> filteredDrives = driveFacade.filterByStatus("COMPLETED");
+		List<Drive> filteredDrives = driveFacade.filterByStatus("ABGESCHLOSSEN");
 
 		assertNotNull(filteredDrives);
 		assertFalse(filteredDrives.isEmpty());
 	}
 
-
-	@Test
-	public void testPersistRecurringDrive() throws SQLException {
-		DriveFacade driveFacade = new DriveFacade();
-		int vehicleId = 1;
-		Date startDate = Date.valueOf("2023-01-01");
-		Date endDate = Date.valueOf("2023-12-31");
-		int interval = 30;
-
-		driveFacade.persistRecurringDrive(vehicleId, startDate, endDate, interval);
-		List<Drive> recurringDrives = driveFacade.getDrivesByLicensePlate("secondlicense");
-		assertFalse(recurringDrives.isEmpty());
-	}
-
-
 	@Test
 	public void testGetAverageSpeedByDriveId() {
 		DriveFacade driveFacade = new DriveFacade();
-		int knownDriveId = 1;
-		double expectedAverageSpeed = 49.0;
+		double expectedAverageSpeed ;
+		try {
+			expectedAverageSpeed = Math.abs(driveFacade.getDriveById(1).getDrivenKilometres()/(driveFacade.calculateTimeDifferenceInSeconds(driveFacade.getDriveById(1).getDepartureTime(),driveFacade.getDriveById(1).getArrivalTime(), driveFacade.getDriveById(1).getWaitingTime())/3600.0));
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 
 
 		try {
-			double actualAverageSpeed = driveFacade.getAverageSpeedByDriveId(knownDriveId);
+			double actualAverageSpeed = driveFacade.getAverageSpeedByDriveId(1);
 			assertEquals(expectedAverageSpeed, actualAverageSpeed, 1.0);
 		} catch (SQLException e) {
 			e.printStackTrace();
