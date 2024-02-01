@@ -66,9 +66,9 @@ public class TestBackup {
 
             writer = new FileWriter("drive.csv");
             writer.write("drive_id;vehicle_id;drive_date;departure_time;arrival_time;waiting_time;driven_kilometres;status\n");
-            writer.write("1;1;2023-01-01;09:00:00;11:30:00;30;50.5;ACTIVE\n");
-            writer.write("2;2;2023-01-02;08:45:00;10:15:00;15;30.2;COMPLETE\n");
-            writer.write("3;3;2023-01-03;10:00:00;12:00:00;0;40.0;ACTIVE\n");
+            writer.write("1;1;2023-01-01;09:00:00;11:30:00;30;50.5;ABGESCHLOSSEN\n");
+            writer.write("2;2;2023-01-02;08:45:00;10:15:00;15;30.2;ABGESCHLOSSEN\n");
+            writer.write("3;3;2023-01-03;10:00:00;12:00:00;0;40.0;ABGESCHLOSSEN\n");
             writer.close();
 
             writer = new FileWriter("category.csv");

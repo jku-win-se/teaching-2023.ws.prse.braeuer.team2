@@ -346,7 +346,7 @@ public class DriveFacade {
         return averageSpeed;
     }
 
-    private long calculateTimeDifferenceInSeconds(Time departureTime, Time arrivalTime, int waitingTime) {
+    public long calculateTimeDifferenceInSeconds(Time departureTime, Time arrivalTime, int waitingTime) {
         long departureMillis = departureTime.getTime();
         long arrivalMillis = arrivalTime.getTime();
         long timeDiffMillis = arrivalMillis - departureMillis;
