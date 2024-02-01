@@ -91,38 +91,19 @@ public class DatabaseConnection {
             statement.executeUpdate(createCategory);
             statement.executeUpdate(createCategoryDrive);
 
-            /*VehicleFacade vehicleFacade = new VehicleFacade();
-            vehicleFacade.persistVehicle(new Vehicle("testlicense", 123456.0));
-            vehicleFacade.persistVehicle(new Vehicle("secondlicense", 100.0));
-            //vehicleFacade.deleteVehicleById(2);
+            //Eine Testfahrt bei Initialisierung der Datenbank anlegen
+            VehicleFacade vehicleFacade = new VehicleFacade();
+            vehicleFacade.persistVehicle(new Vehicle("testlicense", 1200.0));
 
             DriveFacade driveFacade = new DriveFacade();
-            driveFacade.persistDrive(new Drive(1, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now()), Time.valueOf(LocalTime.now()), 10, 100.0));
-            driveFacade.persistDrive(new Drive(2, Date.valueOf(LocalDate.now())));
-            driveFacade.persistDrive(new Drive(2, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now())));
+            driveFacade.persistDrive(new Drive(1,Date.valueOf("2024-01-01"), Time.valueOf("10:00:00"), Time.valueOf("12:00:00"), 10, 150.0));
 
             CategoryFacade categoryFacade = new CategoryFacade();
             categoryFacade.persistCategory(new Category("Reparatur"));
-            categoryFacade.persistCategory(new Category("Freizeit"));
 
             CategoryDriveFacade categoryDriveFacade = new CategoryDriveFacade();
             categoryDriveFacade.persistCategoryDrive(new CategoryDrive(1, 1));
-            categoryDriveFacade.persistCategoryDrive(new CategoryDrive(1, 2));
-            categoryDriveFacade.persistCategoryDrive(new CategoryDrive(2, 2));
-            categoryDriveFacade.persistCategoryDrive(new CategoryDrive(2, 3));
 
-            //System.out.println(categoryDriveFacade.getDrivesByCategoryId(1));
-            //System.out.println(categoryDriveFacade.getDrivesByCategoryId(2));
-
-            List<Drive> drives = driveFacade.getDrivesByLicensePlate("testlicense");
-
-            /*for (Drive drive : drives) {
-                System.out.println(drive);
-            }
-
-            System.out.println(vehicleFacade.getAllVehicles());
-            System.out.println(driveFacade.getAllDrives());
-            System.out.println(categoryFacade.getAllCategories());*/
             exportDataToCSV();
             importDataFromCSV();
         } catch (SQLException e) {

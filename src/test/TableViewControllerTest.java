@@ -1,11 +1,13 @@
 package com.example.fahrtenbuch;
 
+import com.example.fahrtenbuch.business.CategoryFacade;
 import com.example.fahrtenbuch.business.DatabaseConnection;
 import com.example.fahrtenbuch.business.DriveFacade;
 import com.example.fahrtenbuch.entities.Drive;
 import org.junit.*;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -89,7 +91,13 @@ public class TableViewControllerTest {
     @Test
     public void testFilterByCategory() {
         DriveFacade driveFacade = new DriveFacade();
-        String selectedCategory = "Reperatur";
+        CategoryFacade categoryFacade =new CategoryFacade();
+        String selectedCategory;
+        try {
+            selectedCategory = categoryFacade.getCategoryById(1).getName();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         List<Drive> filteredDrives = tableViewController.filterByCategory(selectedCategory);
         for (Drive drive : filteredDrives) {
@@ -99,7 +107,7 @@ public class TableViewControllerTest {
 
     @Test
     public void testFilterByCategoryNoMatch() {
-        String selectedCategory = "Installation";
+        String selectedCategory = "Unsinn";
 
         List<Drive> filteredDrives = tableViewController.filterByCategory(selectedCategory);
         assertTrue(filteredDrives.isEmpty());
