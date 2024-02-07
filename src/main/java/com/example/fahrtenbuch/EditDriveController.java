@@ -29,6 +29,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EditDriveController {
     private DriveFacade driveFacade;
@@ -243,7 +244,7 @@ public class EditDriveController {
             categoryDriveFacade.changeCategoryByDriveID(selectedDrive.getDriveId(), selectedCategory.getCategoryId());
         }
 
-        if(this.selectedDrive.getStatus().toString()!="ABGESCHLOSSEN"){
+        if(!Objects.equals(this.selectedDrive.getStatus().toString(), "ABGESCHLOSSEN")){
             driveFacade.updateOdometerIfCompleted(selectedDrive.getDriveId());
         }
 
