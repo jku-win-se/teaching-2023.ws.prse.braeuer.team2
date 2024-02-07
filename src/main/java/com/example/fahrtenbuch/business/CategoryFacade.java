@@ -20,8 +20,7 @@ public class CategoryFacade {
         Category category = null;
         String query = "SELECT * FROM category WHERE category_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try(PreparedStatement preparedStatement = conn.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -41,8 +40,7 @@ public class CategoryFacade {
         Category category = null;
         String query = "SELECT * FROM category WHERE category_name = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setString(1, categoryName);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -62,8 +60,7 @@ public class CategoryFacade {
         List<Category> categories = new ArrayList<>();
         String query = "SELECT * FROM category";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -83,8 +80,7 @@ public class CategoryFacade {
 
         String query = "INSERT INTO category (category_name) VALUES (?)";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setString(1, c.getName());
             preparedStatement.executeUpdate();
         } catch (
@@ -97,8 +93,7 @@ public class CategoryFacade {
     public void deleteCategoryById(Integer id) {
         String query = "DELETE FROM category WHERE category_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -109,8 +104,7 @@ public class CategoryFacade {
     public void deleteCategoryByName(String name) {
         String query = "DELETE FROM category WHERE category_name = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -121,8 +115,7 @@ public class CategoryFacade {
     public void updateCategoryName(String oldName, String newName) {
         String updateQuery = "UPDATE category SET category_name = ? WHERE category_name = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(updateQuery);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(updateQuery)){
             preparedStatement.setString(1, newName);
             preparedStatement.setString(2, oldName);
             preparedStatement.executeUpdate();
