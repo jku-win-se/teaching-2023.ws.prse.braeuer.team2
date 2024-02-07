@@ -36,7 +36,7 @@ public class DatabaseConnection {
         return conn;
     }
 
-    public void initiateDB() throws SQLException {
+    public void initiateDB() {
         //create DB connection
         conn = getConnection();
 

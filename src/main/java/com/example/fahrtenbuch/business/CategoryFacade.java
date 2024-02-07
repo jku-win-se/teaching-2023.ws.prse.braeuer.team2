@@ -9,7 +9,7 @@ import com.example.fahrtenbuch.entities.*;
 
 
 public class CategoryFacade {
-    private Connection conn;
+    private final Connection conn;
 
     public CategoryFacade() {
         DatabaseConnection databaseConnection = new DatabaseConnection();

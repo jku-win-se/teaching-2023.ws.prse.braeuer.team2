@@ -12,7 +12,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class DriveFacade {
-    private Connection conn;
+    private final Connection conn;
     public DriveFacade() {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         conn = databaseConnection.getConnection();
@@ -42,7 +42,7 @@ public class DriveFacade {
         return drive;
     }
 
-    public List<Drive> getDrivesByLicensePlate(String licensePlate) throws SQLException {
+    public List<Drive> getDrivesByLicensePlate(String licensePlate) {
         List<Drive> drives = new ArrayList<>();
         String query = "SELECT * FROM drive " +
                 "JOIN vehicle ON drive.vehicle_id = vehicle.vehicle_id " +

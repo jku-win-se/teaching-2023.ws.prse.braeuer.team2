@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDriveFacade {
-    private Connection conn;
+    private final Connection conn;
 
     public CategoryDriveFacade() {
         DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -23,7 +23,7 @@ public class CategoryDriveFacade {
 
     }
 
-    public List<Drive> getDrivesByCategoryId(Integer id) throws SQLException {
+    public List<Drive> getDrivesByCategoryId(Integer id) {
         Drive drive = null;
 
 
