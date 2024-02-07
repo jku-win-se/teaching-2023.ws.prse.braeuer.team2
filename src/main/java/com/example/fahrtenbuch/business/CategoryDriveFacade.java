@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDriveFacade {
-    private Connection conn;
+    private final Connection conn;
 
     public CategoryDriveFacade() {
         DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -23,7 +23,7 @@ public class CategoryDriveFacade {
 
     }
 
-    public List<Drive> getDrivesByCategoryId(Integer id) throws SQLException {
+    public List<Drive> getDrivesByCategoryId(Integer id) {
         Drive drive = null;
 
 
@@ -32,9 +32,8 @@ public class CategoryDriveFacade {
         DriveFacade driveFacade = new DriveFacade();
         String query = "SELECT * FROM category_drive WHERE category_id = ?";
 
-        try {
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
 
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -52,13 +51,12 @@ public class CategoryDriveFacade {
     public void persistCategoryDrive(CategoryDrive cd) {
         String query = "INSERT INTO category_drive (category_id, drive_id) VALUES (?, ?)";
 
-        try {
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             Integer driveId = cd.getDriveId();
             if (driveId == null) {
                 throw new IllegalArgumentException("drive_id darf nicht null sein.");
             }
 
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, cd.getCategoryId());
             preparedStatement.setInt(2, cd.getDriveId());
             preparedStatement.executeUpdate();
@@ -71,12 +69,11 @@ public class CategoryDriveFacade {
     public void changeCategoryByDriveID(Integer driveId, Integer newCategoryId) {
         String updateQuery = "UPDATE category_drive SET category_id = ? WHERE drive_id = ?";
 
-        try {
+        try (PreparedStatement updateStatement = conn.prepareStatement(updateQuery)){
             if (driveId == null || newCategoryId == null) {
                 throw new IllegalArgumentException("driveId and newCategoryId must not be null.");
             }
 
-            PreparedStatement updateStatement = conn.prepareStatement(updateQuery);
             updateStatement.setInt(1, newCategoryId);
             updateStatement.setInt(2, driveId);
             updateStatement.executeUpdate();

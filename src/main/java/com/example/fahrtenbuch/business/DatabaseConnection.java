@@ -36,7 +36,7 @@ public class DatabaseConnection {
         return conn;
     }
 
-    public void initiateDB() throws SQLException {
+    public void initiateDB() {
         //create DB connection
         conn = getConnection();
 
@@ -235,7 +235,7 @@ public class DatabaseConnection {
         File driveFile = new File("drive.csv");
         File categoryDriveFile = new File("category_drive.csv");
 
-        if(vehicleFile.exists() && categoryDriveFile.exists() && driveFile.exists() && categoryDriveFile.exists()) {
+        if(vehicleFile.exists() && categoryDriveFile.exists() && driveFile.exists() && categoryFile.exists()) {
             readCSV("vehicle", "vehicle.csv");
             readCSV("category", "category.csv");
             readCSV("drive", "drive.csv");

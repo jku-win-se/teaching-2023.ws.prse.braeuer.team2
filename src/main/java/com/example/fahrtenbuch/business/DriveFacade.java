@@ -12,7 +12,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class DriveFacade {
-    private Connection conn;
+    private final Connection conn;
     public DriveFacade() {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         conn = databaseConnection.getConnection();
@@ -21,8 +21,7 @@ public class DriveFacade {
         Drive drive = null;
         String query = "SELECT * FROM drive WHERE drive_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -43,7 +42,7 @@ public class DriveFacade {
         return drive;
     }
 
-    public List<Drive> getDrivesByLicensePlate(String licensePlate) throws SQLException {
+    public List<Drive> getDrivesByLicensePlate(String licensePlate) {
         List<Drive> drives = new ArrayList<>();
         String query = "SELECT * FROM drive " +
                 "JOIN vehicle ON drive.vehicle_id = vehicle.vehicle_id " +
@@ -75,8 +74,7 @@ public class DriveFacade {
         List<Drive> drives = new ArrayList<>();
         String query = "SELECT * FROM drive";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -107,8 +105,7 @@ public class DriveFacade {
 
         String query = "INSERT INTO drive (vehicle_id, drive_date, departure_time, arrival_time, waiting_time, driven_kilometres, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setInt(1,v.getVehicleId());
             preparedStatement.setDate(2,v.getDate());
             preparedStatement.setTime(3,v.getDepartureTime());
@@ -147,8 +144,7 @@ public class DriveFacade {
     public void deleteDriveById(Integer id) {
         String query = "DELETE FROM drive WHERE drive_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -183,8 +179,7 @@ public class DriveFacade {
                 "JOIN vehicle v ON d.vehicle_id = v.vehicle_id " +
                 "WHERE d.drive_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setInt(1, driveId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -368,8 +363,7 @@ public class DriveFacade {
                 "    status = ? " +
                 "WHERE drive_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)){
             preparedStatement.setInt(1, updatedDrive.getVehicleId());
             preparedStatement.setDate(2, updatedDrive.getDate());
             preparedStatement.setTime(3, updatedDrive.getDepartureTime());

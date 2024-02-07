@@ -15,20 +15,19 @@ import com.example.fahrtenbuch.entities.*;
 
 
 public class VehicleFacade {
-    private Connection conn;
+    private final Connection conn;
 
     public VehicleFacade() {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         this.conn = databaseConnection.getConnection();
     }
 
-    public Vehicle getVehicleById(Integer id) throws SQLException {
+    public Vehicle getVehicleById(Integer id) {
         Vehicle vehicle = null;
         String query = "SELECT * FROM vehicle WHERE vehicle_id = ?";
 
 
-        try {
-            PreparedStatement preparedStatement = this.conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = this.conn.prepareStatement(query)){
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -45,11 +44,10 @@ public class VehicleFacade {
     }
 
     public List<Vehicle> getAllVehicles() {
-        List<Vehicle> vehicles = new ArrayList();
+        List<Vehicle> vehicles = new ArrayList<>();
         String query = "SELECT * FROM vehicle";
 
-        try {
-            PreparedStatement preparedStatement = this.conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = this.conn.prepareStatement(query)){
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()) {
@@ -69,8 +67,7 @@ public class VehicleFacade {
     public void persistVehicle(Vehicle v) {
         String query = "INSERT INTO vehicle (license_plate, odometer) VALUES (?, ?)";
 
-        try {
-            PreparedStatement preparedStatement = this.conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = this.conn.prepareStatement(query)){
             preparedStatement.setString(1, v.getLicensePlate());
             preparedStatement.setDouble(2, v.getOdometer());
             preparedStatement.executeUpdate();
@@ -83,8 +80,7 @@ public class VehicleFacade {
     public void deleteVehicleById(Integer id) {
         String query = "DELETE FROM vehicle WHERE vehicle_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = this.conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = this.conn.prepareStatement(query)){
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException var4) {
@@ -97,8 +93,7 @@ public class VehicleFacade {
         Vehicle vehicle = null;
         String query = "SELECT * FROM vehicle WHERE license_plate = ?";
 
-        try {
-            PreparedStatement preparedStatement = this.conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = this.conn.prepareStatement(query)){
             preparedStatement.setString(1, licensePlate);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -118,8 +113,7 @@ public class VehicleFacade {
         Integer vehicleId = null;
         String query = "SELECT vehicle_id FROM vehicle WHERE license_plate = ?";
 
-        try {
-            PreparedStatement preparedStatement = this.conn.prepareStatement(query);
+        try (PreparedStatement preparedStatement = this.conn.prepareStatement(query)){
             preparedStatement.setString(1, licensePlate);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
