@@ -83,4 +83,22 @@ public class CategoryDriveFacade {
         }
     }
 
+    public boolean checkByDriveId(Integer driveId) {
+        String query = "SELECT COUNT(*) AS count FROM category_drive WHERE drive_id = ?";
+        int count = 0;
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            preparedStatement.setInt(1, driveId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count > 0;
+    }
+
 }

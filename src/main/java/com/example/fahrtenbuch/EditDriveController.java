@@ -241,7 +241,12 @@ public class EditDriveController {
 
         if (selectedCategory != null) {
             CategoryDriveFacade categoryDriveFacade = new CategoryDriveFacade();
-            categoryDriveFacade.changeCategoryByDriveID(selectedDrive.getDriveId(), selectedCategory.getCategoryId());
+            if(categoryDriveFacade.checkByDriveId(selectedDrive.getDriveId())) {
+                categoryDriveFacade.changeCategoryByDriveID(selectedDrive.getDriveId(), selectedCategory.getCategoryId());
+            }else{
+                CategoryDrive cd = new CategoryDrive(selectedCategory.getCategoryId(), selectedDrive.getDriveId());
+                categoryDriveFacade.persistCategoryDrive(cd);
+            }
         }
 
         if(!Objects.equals(this.selectedDrive.getStatus().toString(), "ABGESCHLOSSEN")){
