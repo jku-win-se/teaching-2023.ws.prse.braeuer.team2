@@ -1,2 +1,4 @@
 # Installationsanleitung
-Installationsanleitung wird nach Erstellung der JAR-Datei definiert
+Bei der Erstellung einer ausführbaren JAR-Datei stießen wir auf einige Herausforderungen, insbesondere in Bezug auf Fehlermeldungen bezüglich JavaFX. Nachdem wir einen Bericht über diese Probleme verfasst hatten, wurde dieser mit unserem Professor diskutiert, der daraufhin mit uns zusammen eine Lösung erarbeitete. Diese Lösung wurde dann als Pull-Request auf GitHub bereitgestellt.
+Unserem Professor gelang es, die Anwendung erfolgreich auszuführen, allerdings traten nach dem Zusammenführen mit der Main einige neue Fehler auf, und nicht alle Funktionen konnten wie geplant getestet werden. Obwohl wir trotz unserer Bemühungen nicht in der Lage waren, eine funktionierende JAR-Datei zu generieren, entschieden wir uns nach Rücksprache mit unserem Professor, die Anwendung in diesem Zustand zu belassen. Unser Professor riet uns, keine weiteren Ressourcen mehr in dieses Problem zu investieren.
+
