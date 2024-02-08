@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"Alle Packages","u":"allpackages-index.html"},{"m":"com.example.fahrtenbuch","l":"com.example.fahrtenbuch"},{"m":"com.example.fahrtenbuch","l":"com.example.fahrtenbuch.business"},{"m":"com.example.fahrtenbuch","l":"com.example.fahrtenbuch.entities"}];updateSearchResults();
